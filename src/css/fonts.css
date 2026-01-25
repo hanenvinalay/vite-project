@@ -1,0 +1,34 @@
+/* Definición de fuentes locales */
+@font-face {
+  font-family: "Averta";
+  src: local("Averta"), url("./fonts/averta-regular.woff2") format("woff2"),
+    url("./fonts/averta-regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Averta";
+  src: local("Averta Semibold"),
+    url("./fonts/averta-semibold.woff2") format("woff2"),
+    url("./fonts/averta-semibold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Averta";
+  src: local("Averta Bold"), url("./fonts/averta-bold.woff2") format("woff2"),
+    url("./fonts/averta-bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Estilos fallback */
+body {
+  font-family: "Averta", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}

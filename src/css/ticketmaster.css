@@ -1,0 +1,361 @@
+/* Ticketmaster Login Styles */
+.sc-qQZrP.gOyfsO {
+  background: linear-gradient(135deg, #026cdf 0%, #0d47a1 100%);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.sc-fzoXWK.bGqbZH {
+  background: linear-gradient(135deg, #026cdf 0%, #0d47a1 100%);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+  width: 50%;
+  color: white;
+}
+
+.sc-fzqBZW.eNQuho {
+  width: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.sc-fznZeY.gQVeaE.layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.TextStyle__Mauna-sc-1vd3o1f-0.sc-fznxKY.bbmRot {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.TextStyle__Boising-sc-1vd3o1f-8.sc-fznMAR.iBFNqE {
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.sc-fznWOq.cqDPIl {
+  width: 200px;
+  height: auto;
+}
+
+.sc-pQERe.eXzml {
+  width: 100%;
+  max-width: 400px;
+}
+
+.TextStyle__Vinson-sc-1vd3o1f-4.sc-fzomME.hhnKZs {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.sc-pQrCd.hptqUu {
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
+
+.indexstyles__InputField-sc-ruvmzp-0.kqWNWc {
+  margin-bottom: 1.5rem;
+}
+
+.indexstyles__Label-sc-ruvmzp-1.kNGiKL {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.indexstyles__Input-sc-ruvmzp-3.fXaQta {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.indexstyles__Input-sc-ruvmzp-3.fXaQta:focus {
+  outline: none;
+  border-color: #026cdf;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.eMddAo {
+  width: 100%;
+  background: #026cdf;
+  color: white;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 1.5rem;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.eMddAo:hover:not(:disabled) {
+  background: #0d47a1;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.eMddAo:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.sc-pIgJL.hepMNe {
+  font-size: 0.8rem;
+  color: #666;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.Link__StyledLink-sc-pudy0l-0.ikIpye {
+  color: #026cdf;
+  text-decoration: none;
+}
+
+.Link__StyledLink-sc-pudy0l-0.ikIpye:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sc-fznZeY.gQVeaE.layout {
+    flex-direction: column;
+  }
+
+  .sc-fzoXWK.bGqbZH,
+  .sc-fzqBZW.eNQuho {
+    width: 100%;
+  }
+
+  .sc-fzoXWK.bGqbZH {
+    min-height: 40vh;
+    text-align: center;
+  }
+
+  .TextStyle__Mauna-sc-1vd3o1f-0.sc-fznxKY.bbmRot {
+    font-size: 2rem;
+  }
+}
+
+/* Ticketmaster App Styles */
+.sc-7e332ac7-0.iANLom {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.sc-7e332ac7-1.eQlytX {
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.sc-7e332ac7-3.cBThNd {
+  background: #026cdf;
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sc-7e332ac7-4.cebxtu {
+  color: white;
+}
+
+.sc-2eac59d2-2.cesjMZ {
+  font-weight: 600;
+}
+
+.sc-2eac59d2-3.jeLwlb {
+  font-weight: 400;
+}
+
+.sc-c3852847-0.cJkGra {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.sc-c3852847-1.esVqUc {
+  display: flex;
+  align-items: center;
+}
+
+.sc-c3852847-2.dgODTX::before {
+  content: ">";
+  margin: 0 0.5rem;
+  color: #666;
+}
+
+.sc-b78ef1b0-1.giEdKV {
+  color: #026cdf;
+  text-decoration: none;
+}
+
+.sc-b78ef1b0-1.giEdKV:hover {
+  text-decoration: underline;
+}
+
+.sc-c3852847-5.fOsyUG {
+  color: #666;
+  font-weight: 500;
+}
+
+.sc-975711f7-1.HbBIq {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 1rem 0;
+}
+
+/* Event Cards */
+.sc-15f1dfff-0.dePqfb {
+  display: block;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sc-15f1dfff-0.dePqfb:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.sc-d52cdb9b-0.bOSHk {
+  position: relative;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.sc-d52cdb9b-1.DZIpT {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.sc-d52cdb9b-2.jmFPgs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.sc-d52cdb9b-3.hokKfn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1rem;
+  color: white;
+}
+
+.sc-15f1dfff-6.fYZjNw {
+  padding: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.sc-15f1dfff-4.cUASZY {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.sc-ac84ae8c-4.iUnqWg {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.sc-ac84ae8c-6.dMqBmK {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Date Display */
+.sc-9e0822bc-0.hVtRUE {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f8f9fa;
+  border-radius: 8px;
+  padding: 0.5rem;
+  min-width: 60px;
+}
+
+.sc-9e0822bc-1.WZplE {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.sc-9e0822bc-2.bPbuYF {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* Buttons */
+.indexstyles__StyledButton-sc-83qv1q-0.eSghXc {
+  background: #026cdf;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.eSghXc:hover {
+  background: #0d47a1;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.iTqNMc {
+  background: transparent;
+  color: #666;
+  border: 2px solid #ddd;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.indexstyles__StyledButton-sc-83qv1q-0.dkzSIQ {
+  background: #026cdf;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
