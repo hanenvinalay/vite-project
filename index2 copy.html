@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualizar PDF417 dinámico</title>
+  <script src="https://cdn.jsdelivr.net/npm/bwip-js/dist/bwip-js.min.js"></script> <!-- Incluye bwip-js -->
+</head>
+<body>
+
+<canvas id="psetokenview-canvas-825861667" 
+        aria-label="Dynamic PDF417 Barcode" 
+        role="img" width="400" height="100" 
+        style="box-sizing: border-box; margin: 8px; padding: 0px; width: 200px; height: 50px; transform: scaleY(1);">
+</canvas>
+
+<script>
+  // Obtén la referencia del canvas
+  const canvas = document.getElementById('psetokenview-canvas-825861667');
+
+  // Función para generar el token dinámico (simulación de token)
+  function generateDynamicToken() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = 'MSOHjX/gjR5MaKDkfU2skTp4OVHKCE71oRZBEfDCTld7iTi4kbDg/1o1rT5QxWMgkhPCl3KE47TF1BnKAAsADgAABRrgJI6kRJ6TiY7qmrpiu8oofdol/MI4q/exEAAh+QQFAgAVACwAAAAAAQABAAAFA2AVAgAh+QQFAgAVACwAAAAAAQABAAAFA2AVAgAh+';
+    for (let i = 0; i < 50; i++) { // Genera un token largo de 50 caracteres
+      token += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return token;
+  }
+
+  // Función para renderizar el PDF417 y crear su imagen base64
+  function renderPDF417(canvas, data) {
+    try {
+      // Usa bwip-js para renderizar el PDF417 en el canvas
+      bwipjs.toCanvas(canvas, {
+        bcid:        'pdf417',       // Tipo de código de barras
+        text:        data,          // Información del código de barras
+        scale:       2,             // Escala para ajustar tamaño
+        height:      10,            // Altura de las barras
+        includetext: true,          // Incluye el texto debajo
+      });
+
+      // Luego de renderizar, genera la imagen base64
+      const base64Image = canvas.toDataURL('image/png');
+      console.log('Base64:', base64Image);
+
+      // Aquí puedes enviar el base64 al servidor o usarlo en alguna parte (por ejemplo, mostrarlo en un `<img>`)
+
+    } catch (err) {
+      console.error('Error al renderizar el código PDF417:', err);
+    }
+  }
+
+  // Función para actualizar el código de barras cada 10 segundos
+  function updateBarcodeEvery10Seconds() {
+    setInterval(() => {
+      const dynamicToken = generateDynamicToken(); // Genera un nuevo token cada 10 segundos
+      console.log('Nuevo token generado:', dynamicToken);
+
+      // Renderiza el nuevo código de barras con el token en el canvas
+      renderPDF417(canvas, dynamicToken);
+    }, 10000); // Cada 10 segundos (10,000 ms)
+  }
+
+  // Inicia la actualización automática del código de barras
+  updateBarcodeEvery10Seconds();
+
+  // Genera la primera vez el código al cargar la página
+  const initialToken = generateDynamicToken();
+  renderPDF417(canvas, initialToken);
+</script>
+
+</body>
+</html>

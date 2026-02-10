@@ -1,32 +1,4 @@
 
-@font-face { 
-  font-weight:900;
-  font-family:'Averta';
-  font-style:normal;
-  src:url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-extrabold%5C.woff2) format('woff2'),
-         url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-extrabold%5C.woff) format('woff');
-} 
-@font-face { 
-  font-weight:700;
-  font-family:'Averta';
-  font-style:normal;
-  src:url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-bold%5C.woff2) format('woff2'),
-         url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-bold%5C.woff) format('woff');
-} 
-@font-face { 
-  font-weight:600;
-  font-family:'Averta';
-  font-style:normal;
-  src:url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-semibold%5C.woff2) format('woff2'),
-         url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-semibold%5C.woff) format('woff');
-} 
-@font-face { 
-  font-weight:400;
-  font-family:'Averta';
-  font-style:normal;
-  src:url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-regular%5C.woff2) format('woff2'),
-         url(https://www.ticketmaster.com.mx/user/order/1W9bOOroaex6_zns6KD-9x3XgC5exTjXxPTPU1OC/3D00602CCA2A3A58/%5C/%5C/uk%5C.tmconst%5C.com%5C/production-10-203-0-11172071%5C/fonts%5C/averta-regular%5C.woff) format('woff');
-} 
   body {  
     font-size:var(--rainier-font-size,16px);
     letter-spacing:0.02em;
@@ -89,7 +61,7 @@ html {
 
 .biKGpv {
     position: relative;
-    z-index: 2;
+    z-index: 0;
 } 
 
  
@@ -138,19 +110,17 @@ html {
     overflow: hidden;
 } 
 
-.jBHlYG { 
-    display: none;
-} 
+ 
 
 @media (min-width: 720px){ 
   .jBHlYG { 
     position: fixed; 
     top: 0px; 
     left: 0px; 
-    z-index: 2; 
+    z-index: 234546; 
     display: block; 
     width: 100%; 
-    height: 100vh; 
+    height: 100%; 
     background: rgba(0, 0, 0, 0.5);
   } 
 }     
@@ -162,7 +132,7 @@ html {
 
 .fTemVb { 
     position: relative; 
-    z-index: 2; 
+    z-index: 0; 
     display: flex; 
     -webkit-box-align: stretch; 
     align-items: stretch; 
@@ -183,7 +153,7 @@ html {
 .iFvUKK { 
     position: relative; 
     top: 0px; 
-    z-index: 5; 
+    z-index: 0; 
     display: flex; 
     flex-direction: column; 
     padding-right: 16px; 
@@ -1713,3 +1683,233 @@ input {
    left: 1px;
 }  
 
+
+
+@font-face { 
+  font-weight:900;
+  font-family:'Averta';
+  font-style:normal;
+  src:url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-black%5C.woff2) format('woff2'),
+         url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-black%5C.woff) format('woff');
+} 
+@font-face { 
+  font-weight:800;
+  font-family:'Averta';
+  font-style:normal;
+  src:url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-extrabold%5C.woff2) format('woff2'),
+         url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-extrabold%5C.woff) format('woff');
+} 
+@font-face { 
+  font-weight:700;
+  font-family:'Averta';
+  font-style:normal;
+  src:url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-bold%5C.woff2) format('woff2'),
+         url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-bold%5C.woff) format('woff');
+} 
+@font-face { 
+  font-weight:600;
+  font-family:'Averta';
+  font-style:normal;
+  src:url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-semibold%5C.woff2) format('woff2'),
+         url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-semibold%5C.woff) format('woff');
+} 
+@font-face { 
+  font-weight:400;
+  font-family:'Averta';
+  font-style:normal;
+  src:url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-regular%5C.woff2) format('woff2'),
+         url(https://www.ticketmaster.com.mx/user/%5C/%5C/uk%5C.tmconst%5C.com%5C/rc-01b9906d%5C/fonts%5C/averta-regular%5C.woff) format('woff');
+} 
+  body {  
+    font-size:var(--rainier-font-size,16px);
+    letter-spacing:0.02em;
+    font-weight:400;
+    color:rgb(18, 18, 18);
+    font-family:Averta, helvetica, arial, sans-serif;
+    line-height:1.4;
+  }  
+body { 
+/* CSS Variables that may have been missed get put on body */ 
+    --gds-side-panel-padding-size:  20px;  
+    --gds-side-panel-border-color:  #d6d6d6;  
+    --gds-side-panel-icon-size:  32px;  
+} 
+
+* { 
+    box-sizing: inherit;
+} 
+
+body { 
+    font-size: var(--rainier-font-size,16px); 
+    letter-spacing: 0.02em; 
+    font-weight: 400; 
+    width: 100%; 
+    height: 100%; 
+    margin: 0px; 
+    color: rgb(18, 18, 18); 
+    font-family: Averta, helvetica, arial, sans-serif; 
+    line-height: 1.4; 
+    text-size-adjust: none; 
+    -webkit-font-smoothing: antialiased;
+} 
+
+html { 
+    box-sizing: border-box; 
+    height: 100%; 
+    line-height: 1.4; 
+    scroll-behavior: smooth; 
+    --fiji-font-size: 18px; 
+    --rainier-font-size: 16px; 
+    --fiji-line-height: 26px; 
+} 
+
+@media (min-width: 900px){ 
+  html { 
+    --fiji-font-size: 18px; 
+    --rainier-font-size: 16px; 
+    --fiji-line-height: 26px; 
+  } 
+}     
+
+.hxCvoI { 
+    --gds-side-panel-padding-size: 20px; 
+    --gds-side-panel-border-color: #d6d6d6; 
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 8px 20px 0px; 
+    position: fixed; 
+    inset: 0px; 
+    z-index: 1000;
+    display: grid; 
+    grid-template-rows: auto 1fr auto; 
+    background-color: rgb(255, 255, 255); 
+    transform: translateX(100%); 
+    transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+} 
+
+@media not all and (max-width: 720px){ 
+  .hxCvoI { 
+    width: 420px; 
+    inset-inline: auto 0px;
+    z-index: 1000;
+  } 
+}     
+
+.hxCvoI[data-enter] { 
+    transform: translateX(0px);
+} 
+
+*,:before,:after { 
+    box-sizing: inherit;
+} 
+
+button { 
+    font-family: inherit;
+} 
+
+.cvVDZQ { 
+    --gds-side-panel-icon-size: 32px; 
+    position: relative; 
+    padding: var(--gds-side-panel-padding-size); 
+    border-bottom: 1px solid var(--gds-side-panel-border-color);
+} 
+
+.jgPXDl { 
+    overflow-y: auto;
+} 
+
+.cpewAG { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 4px; 
+    -webkit-box-pack: center; 
+    justify-content: center; 
+    min-height: var(--gds-side-panel-icon-size); 
+    padding-inline-end: calc(var(--gds-side-panel-icon-size) + 12px); 
+    padding-inline-start: 0px;
+} 
+
+.ydDMU { 
+    margin: initial; 
+    padding: initial; 
+    border: 1px transparent; 
+    font-weight: inherit; 
+    font-size: inherit; 
+    font-family: inherit; 
+    line-height: inherit; 
+    letter-spacing: inherit; 
+    text-transform: inherit; 
+    color: rgb(2, 77, 223); 
+    background-color: transparent; 
+    display: inline-block; 
+    width: 44px; 
+    height: 44px; 
+    border-radius: 4px; 
+    text-align: center; 
+    text-decoration: none; 
+    transition: background-color 0.2s;
+} 
+
+.jdjnGW { 
+    position: absolute; 
+    top: var(--gds-side-panel-padding-size); 
+    width: var(--gds-side-panel-icon-size); 
+    height: var(--gds-side-panel-icon-size); 
+    inset-inline-end: var(--gds-side-panel-padding-size);
+} 
+
+.ydDMU:not(:disabled) { 
+    cursor: pointer;
+} 
+
+.jdjnGW:after { 
+    position: absolute; 
+    inset: calc((44px - var(--gds-side-panel-icon-size)) / 2 * -1); 
+    width: 44px; 
+    height: 44px; 
+    content: "";
+} 
+
+.ydDMU:not(:disabled):hover { 
+    color: rgb(1, 57, 167); 
+    background-color: rgb(191, 210, 247);
+} 
+
+.dbtRDX { 
+    position: relative; 
+    font-weight: 600; 
+    font-size: var(--fiji-font-size,18px); 
+    line-height: var(--fiji-line-height,26px); 
+    letter-spacing: 0.02em; 
+    margin: 0px;
+} 
+
+.iXcSWy { 
+    display: flex; 
+    -webkit-box-align: center; 
+    align-items: center; 
+    -webkit-box-pack: center; 
+    justify-content: center; 
+    min-height: 100%;
+} 
+
+.lmhoCy { 
+    border: 0px; 
+    clip: rect(0px, 0px, 0px, 0px); 
+    height: 1px; 
+    margin: -1px; 
+    overflow: hidden; 
+    padding: 0px; 
+    position: absolute; 
+    white-space: nowrap; 
+    width: 1px;
+} 
+
+.ckLyyv { 
+    display: inline-block; 
+    flex-shrink: 0; 
+    vertical-align: middle; 
+    transition: transform 0.2s ease-out; 
+    fill: currentcolor;
+} 
+
+
+/* These were inline style tags. Uses id+class to override almost everything */

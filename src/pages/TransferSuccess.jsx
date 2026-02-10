@@ -1,60 +1,39 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import '../css/Transfersucess.css'
 import Modal from '../components/Modal'
 import { AccordionList } from '../components/NavBar'
+import { getUser } from '../api'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 export default function TransferSuccess () {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState(null)
+  const location = useLocation()
+  const user = getUser()
+
+  const [transfer, setTransfer] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const init = async () => {
-      try {
-        document.title = 'Mi cuenta - Transferencia exitosa'
+    document.title = 'Mi cuenta - Transferencia exitosa'
 
-        // Verificar autenticación (usar authToken, no token)
-        const token = localStorage.getItem('token')
-        if (!token) {
-          navigate('/login', { replace: true })
-          return
-        }
+    // 🔹 La respuesta viene SOLO desde navigate(state)
+    const stateTransfer = location.state?.transfer
 
-        const data = localStorage.getItem('transferFormData')
-        if (!data) {
-          console.error('No se encontraron datos de la transferencia')
-          navigate('/user/orders')
-          return
-        }
-
-        const parsedData = JSON.parse(data)
-        localStorage.removeItem('transferFormData')
-
-        if (!parsedData.event || !parsedData.recipientInfo) {
-          console.error('Datos de transferencia incompletos')
-          navigate('/user/orders')
-          return
-        }
-
-        setFormData(parsedData)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error al cargar los datos:', error)
-        navigate('/user/orders')
-      }
+    if (!stateTransfer) {
+      // Entrada directa por URL o refresh
+      navigate('/user/orders', { replace: true })
+      return
     }
 
-    init()
-  }, [navigate])
+    setTransfer(stateTransfer)
+    setLoading(false)
+  }, [location.state, navigate])
 
-  if (loading || !formData) {
-    return <Modalo />
+  if (loading || !transfer) {
+    return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
-
-  const event = formData.event
-  const recipientInfo = formData.recipientInfo || {}
-  const selectedTickets = formData.selectedTickets || []
+  const event = transfer?.event || {}
+  const tickets = transfer?.tickets || []
 
   return (
     <main id='main-content' className='snipcss-7zbHI'>
@@ -112,7 +91,7 @@ export default function TransferSuccess () {
                         className='sc-jfe99z-1 cKVhWb sc-1loturx-4 cDhlqi'
                         href='#'
                       >
-                        {event?.event || event?.artist || 'Evento'}
+                        {event?.name || event?.artist || 'Evento'}
                       </a>
                       <span
                         role='presentation'
@@ -139,16 +118,16 @@ export default function TransferSuccess () {
                     <div className='sc-1xcba17-1 kQBTiV'>
                       <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
                         <span>
-                          {event?.formatted_date?.full || 'Fecha del evento'}
+                          {event?.formattedate?.shortDate || 'Fecha del evento'}
                         </span>
                       </span>
                       <span aria-hidden='true'>
                         <div aria-hidden='true' className='sc-1eisn46-0 hPSPJL'>
                           <span className='sc-1eisn46-1 chthMZ'>
-                            {event?.formatted_date?.month || 'ENE'}
+                            {event?.formattedDate?.month || 'ENE'}
                           </span>
                           <span className='sc-1eisn46-2 iRCDqS'>
-                            {event?.formatted_date?.day || '01'}
+                            {event?.formattedDate?.day || '01'}
                           </span>
                           <span className='sc-1eisn46-3 fFbPas' />
                         </div>
@@ -157,20 +136,22 @@ export default function TransferSuccess () {
                         <div className='sc-1xcba17-3 iYOCcf'>
                           <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
                             <span>
-                              {event?.info || 'Información del evento'}
+                              {event?.formattedDate?.shortDate ||
+                                'Información del evento'}
                             </span>
                           </span>
                           <span aria-hidden='true'>
                             <div aria-hidden='true' className='sc-hkg1cn-0'>
                               <span className='sc-hkg1cn-1 khlcWQ'>
-                                {event?.info || 'Información del evento'}
+                                {event?.formattedDate?.shortDate ||
+                                  'Información del evento'}
                               </span>
                             </div>
                           </span>
                         </div>
                         <div>
                           <p className='sc-1xcba17-4 inPRYG'>
-                            {event?.event ||
+                            {event?.name ||
                               event?.artist ||
                               'Nombre del evento'}
                           </p>
@@ -202,7 +183,7 @@ export default function TransferSuccess () {
             <p className='sc-19fgctb-1 bEa-Det'>
               <span className='sc-19fgctb-2 uriLe'>¡Bienvenido de vuelta!</span>{' '}
               <span data-cs-mask='true' className='sc-19fgctb-3 kKgqHA'>
-                Diana
+                {user?.name || 'Usuario'}
               </span>
             </p>
           </div>
@@ -237,36 +218,23 @@ export default function TransferSuccess () {
                   </div>
                   <div id='namesito' className='sc-tota5i-2 koWrfQ'>
                     <h1 className='sc-tota5i-2 koWrfQ'>
-                      ¡Enviaste {selectedTickets.length || 0} boleto(s) a{' '}
-                      {recipientInfo.name || 'Usuario'}!
+                      ¡Enviaste {tickets.length || 0} boleto(s) a{' '}
+                      {transfer?.recipient_name || 'Usuario'}!
                     </h1>
                   </div>
                   <p id='mailo' className='sc-tota5i-3 eDIwjU'>
-                    {recipientInfo.email || formData.recipient_email}
+                    {transfer?.recipient_email || transfer.recipient_email}
                   </p>
                   <p className='sc-tota5i-3 eDIwjU'>
-                    {recipientInfo.name || formData.recipient_name}{' '}
-                    {recipientInfo.lastname || formData.recipient_lastname}
+                    {transfer?.recipient_name || transfer.recipient_name}{' '}
+                    {transfer?.recipient_lastname ||
+                      transfer.recipient_lastname}
                   </p>
-                  {formData.message && (
-                    <div
-                      style={{
-                        margin: '16px 0',
-                        padding: '12px',
-                        backgroundColor: '#f5f5f5',
-                        borderRadius: '4px'
-                      }}
-                    >
-                      <p style={{ margin: 0, fontStyle: 'italic' }}>
-                        <strong>Mensaje incluido:</strong> "{formData.message}"
-                      </p>
-                    </div>
-                  )}
 
                   <div id='ticket-container'>
-                    {selectedTickets && selectedTickets.length > 0 ? (
+                    {tickets && tickets.length > 0 ? (
                       <ul style={{ listStyleType: 'none', padding: 0 }}>
-                        {selectedTickets.map((ticket, idx) =>
+                        {tickets.map((ticket, idx) =>
                           ticket.section === 'PISTA' ||
                           ticket.section === 'GRAL' ? (
                             // Template para boletos de PISTA o GRAL-B
@@ -284,7 +252,7 @@ export default function TransferSuccess () {
                                         className='TicketInfoHeader__HeaderTitle-sc-101wb79-1 sbbQd'
                                         style={{}}
                                       >
-                                        Boleto {ticket.section}
+                                        {ticket.type || 'Boleto de pista'}
                                       </h2>
                                     </div>
                                     <div className='TicketTopSectionGeneric__MainTextWrapper-sc-1sfa0cb-0 cDtTZX'>
@@ -320,7 +288,9 @@ export default function TransferSuccess () {
                                 >
                                   <div className='bHIhNV snipcss-W5hsS'>
                                     <div className='ctixpn'>
-                                      <h2 className='cTdnwj'>Boleto normal</h2>
+                                      <h2 className='cTdnwj'>
+                                        {ticket.type || 'Boleto de pista'}
+                                      </h2>
                                     </div>
                                     <div className='ficefJ'>
                                       <div className='SeatInfov2__Row-sc-hzxzxj-0 hXYMZK'>
@@ -400,9 +370,9 @@ export default function TransferSuccess () {
                   <div>
                     <h3>El destinatario recibirá un email</h3>
                     <p>
-                      {recipientInfo.name || formData.recipient_name} recibirá
-                      un correo electrónico en{' '}
-                      {recipientInfo.email || formData.recipient_email} con
+                      {transfer.recipient_name || transfer.recipient_name}{' '}
+                      recibirá un correo electrónico en{' '}
+                      {transfer.recipient_email || transfer.recipient_email} con
                       instrucciones para aceptar la transferencia.
                     </p>
                   </div>

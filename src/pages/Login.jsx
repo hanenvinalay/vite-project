@@ -10,6 +10,9 @@ export default function Login () {
   const [error, setError] = useState('')
 
   const navigate = useNavigate()
+  useEffect(() => {
+    document.title = 'Autentica tu cuenta  - Ticketmaster'
+  }, [])
 
   // 🔹 Redirigir si YA está logueado
   useEffect(() => {

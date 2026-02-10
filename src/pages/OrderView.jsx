@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import '../css/MisBoletos.css'
 import { AccordionLat } from '../components/NavBar'
@@ -7,14 +7,28 @@ import {
   getWalletImage,
   getWalletAltText
 } from '../utils/browserDetection'
+import '../css/Aside.css'
+import Modal from '../components/Modal'
 import { authenticatedRequest, getUser } from '../api/index'
+import DynamicPDF417 from './Ssnbox'
+
 export default function OrderView () {
   const { orderNumber } = useParams()
+  const canvasRef = useRef(null)
+
   const [order, setOrder] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [activeTab, setActiveTab] = useState('tickets')
+  const [open, setOpen] = useState(false)
+  const [openPanels, setOpenPanels] = useState({})
 
+  const togglePanel = ticketId => {
+    setOpen(prev => ({
+      ...prev,
+      [ticketId]: !prev[ticketId]
+    }))
+  }
   const user = getUser()
 
   useEffect(() => {
@@ -48,22 +62,21 @@ export default function OrderView () {
   }, [])
 
   if (error || !order) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <div className='text-center'>
-          <h2 className='text-xl font-semibold mb-2 text-red-600'>Error</h2>
-          <p className='text-gray-600'>{error || 'Orden no encontrada'}</p>
-          <button
-            onClick={() => navigate('/user/orders')}
-            className='mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700'
-          >
-            Volver a Mis Boletos
-          </button>
-        </div>
-      </div>
-    )
+    return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
 
+  const isOpen = ticketId => openPanel === ticketId // Función para verificar si un panel está abierto
+// Función para calcular el total de boletos
+const getTotalTickets = () => {
+  const ticketsCount = order.tickets ? order.tickets.length : 0;
+  const transferredCount = order.ticketsTransferred && order.ticketsTransferred.length > 0
+    ? order.ticketsTransferred.length
+    : 0;
+
+  return ticketsCount + transferredCount;
+};
+
+// Uso de la función en el render
   return (
     <div className='sc-12r1da7-0 efoHKt'>
       <div className='sc-12r1da7-1 kQyEdo'>
@@ -439,6 +452,7 @@ export default function OrderView () {
                 <div className='sc-1x39nnc-0 eBlMNx'>
                   <div className='sc-1x39nnc-1 bsOQKE'>
                     <h2 className='sc-wm13uv-0 lgqIFQ'>Mis boletos</h2>
+
                     <div className='sc-1x39nnc-2 gQMKTM snipcss-ofQlw'>
                       <div
                         data-testid='deliveryInfo'
@@ -458,7 +472,7 @@ export default function OrderView () {
                           <p className='sc-1ubto06-2 kTigBz'>
                             <strong>×</strong>
                             <strong id='count'>
-                              {order.tickets ? order.tickets.length : 0}
+                              {getTotalTickets()} {/* Muestra el total de boletos */}
                             </strong>{' '}
                             Boletos digitales
                           </p>
@@ -613,47 +627,9 @@ export default function OrderView () {
                                     <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
                                       Código QR requerido para acceder.
                                     </span>
-                                    <div
-                                      id=':r2:-882325277210255536E'
-                                      data-testid='barcode-container'
-                                    >
-                                      <div
-                                        id='pseview-3763052220'
-                                        className='style-bxhcO'
-                                      >
-                                        <div
-                                          id='psetokenview-div-3763052220'
-                                          className='style-ooftK'
-                                        >
-                                          <canvas
-                                            id='psetokenview-canvas-3763052220'
-                                            width={600}
-                                            height={150}
-                                            className='style-y7qGm style-hbhso'
-                                          />
-                                          <p
-                                            id='psetokenview-subtitle-3763052220'
-                                            className='style-QOP54'
-                                          >
-                                            No podrás entrar con capturas de
-                                            pantalla.{' '}
-                                          </p>
-                                          <div
-                                            id='style-vvnVH'
-                                            className='style-vvnVH'
-                                          >
-                                            <div
-                                              id='style-d2twm'
-                                              className='style-d2twm'
-                                            />
-                                            <div
-                                              id='style-wvqr2'
-                                              className='style-wvqr2'
-                                            />
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
+                                    <DynamicPDF417
+                                      barcode={ticket.barcode || 'BARCODE'}
+                                    />
                                   </div>
                                   <span
                                     data-testid='rawBarcode'
@@ -690,174 +666,426 @@ export default function OrderView () {
                           </li>
                         ) : (
                           // Plantilla para boletos normales
-                          <li
-                            key={ticket.id || index}
-                            className='sc-knkt5x-0 jrtQbZ sc-1gxt77a-2 tUato snipcss-2Ib6L snipcss-ZmcFP style-EQIUf'
-                            id='style-EQIUf'
-                          >
-                            <div
-                              data-testid='ticketCard'
-                              className='TicketCardv2__Card-sc-1akc5v-0 kxlGTJ'
+                          <>
+                            {' '}
+                            <li
+                              key={ticket.id || index}
+                              className='sc-knkt5x-0 jrtQbZ sc-1gxt77a-2 tUato snipcss-2Ib6L snipcss-ZmcFP style-EQIUf'
+                              id='style-EQIUf'
                             >
-                              <div className='TicketCardv2__TicketHeaderBorderContainer-sc-1akc5v-2 kbjGha'>
-                                <svg
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  fill='#ffffff'
-                                  width='100%'
-                                  height='100%'
-                                  viewBox='0 0 135 24'
-                                  aria-hidden='true'
-                                >
-                                  <path d='M41.57 6.27c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a8.98 8.98 0 0 1-3.75.86c-2.04 0-3.23-.71-3.39-2.62l-.02-.34v-.1a6.46 6.46 0 0 1 .52-2.41c.61-1.55 1.48-2.62 3.36-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83H39.1a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm-5.4.28h-4.15l-4.44 4.41h-.05L29.65 1h-3.19l-3.78 17.7h3.11l1.38-6.44h.05l3.16 6.45h3.6l-3.7-6.62 5.88-5.54zm15.16 8.8a5 5 0 0 1 .15-1.18l1.16-5.3h2.86l.5-2.32h-2.86l.79-3.61-3.42 1.1-.55 2.5h-2.3l-.51 2.32h2.3l-.9 4.11c-.2.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.69 3.2.54 0 1.16-.18 1.7-.3l.56-2.45a4.28 4.28 0 0 1-1.55.28c-.72 0-1.22-.44-1.22-1.18zm-47.14 0c0-.47.07-.9.14-1.18l1.16-5.3h2.86l.5-2.32H5.99l.79-3.61-3.43 1.1-.54 2.5H.5L0 8.87h2.3l-.9 4.11c-.21.97-.4 1.89-.4 2.83C1 18.14 2.52 19 4.69 19c.54 0 1.16-.18 1.7-.3l.56-2.45a4.27 4.27 0 0 1-1.55.28c-.71 0-1.22-.44-1.22-1.18zm12.48-1.98c0-2.29 1.42-4.65 3.97-4.65.88 0 1.7.21 2.33.62l.78-2.6a11.4 11.4 0 0 0-3.19-.47c-4.4 0-7.22 3.23-7.22 7.48 0 3.14 2.04 5.24 5.2 5.24 1.05 0 2.1-.1 3.07-.57l.36-2.5c-.83.4-1.81.61-2.6.61-2.18 0-2.7-1.58-2.7-3.16zM14.5 1.31h-3.19l-.67 3.02h3.2l.66-3.02zm-4.36 5.24L7.54 18.7h3.19l2.61-12.16h-3.19zm72.06-.27c-1.43 0-2.81.26-4.17.73l-.45 2.53a9.48 9.48 0 0 1 4.02-.95c1.12 0 2.45.35 2.45 1.58 0 .36 0 .71-.1 1.04h-1.11c-3 0-7.52.3-7.52 4.32 0 2.24 1.57 3.47 3.78 3.47 1.76 0 2.86-.78 3.95-2.15h.05l-.33 1.87h2.68c.29-2.3 1.5-7.06 1.5-8.7 0-2.85-2.3-3.74-4.75-3.74zM80 16.68c-.82 0-1.62-.42-1.62-1.27 0-2.05 2.56-2.31 4.1-2.31h1.13c-.5 1.96-1.24 3.58-3.61 3.58zM71.6 6.27c-1.72 0-3.5.73-4.31 2.31h-.05c-.17-1.47-1.67-2.31-3.12-2.31-1.5 0-2.9.66-3.75 1.9h-.05l.29-1.62h-2.98l-.26 1.35-2.23 10.8h3.18l1.26-5.78c.4-1.63 1-4.2 3.16-4.2.82 0 1.5.57 1.5 1.46 0 .74-.23 1.87-.4 2.6l-1.28 5.93h3.18L67 12.92c.4-1.65.95-4.2 3.17-4.2.8 0 1.5.57 1.5 1.46 0 .74-.24 1.87-.4 2.6l-1.3 5.93h3.2l1.27-5.81c.27-1 .55-2.22.55-3.3a3.4 3.4 0 0 0-3.4-3.33zm41.24 0c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a9 9 0 0 1-3.75.86c-2.04 0-3.23-.71-3.38-2.62-.01-.12-.03-.22-.03-.34v-.1c.02-.84.2-1.66.53-2.41.6-1.55 1.47-2.62 3.35-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83h-4.36a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm10.18 2.57h-.05l.43-2.3h-3.05l-.28 1.64-2.19 10.53h3.19l1.14-5.46c.4-1.96 1.5-3.96 3.76-3.96.4 0 .85.07 1.2.19l.68-3.1a4.9 4.9 0 0 0-1.22-.11c-1.47 0-3.04 1.25-3.61 2.57zm-20.87 6.51c0-.47.07-.9.14-1.18l1.17-5.3h2.85l.5-2.32h-2.85l.78-3.61-3.42 1.1-.55 2.5h-2.3l-.5 2.32h2.3l-.9 4.11c-.22.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.68 3.2.55 0 1.17-.18 1.71-.3l.55-2.45c-.4.17-.98.28-1.55.28-.71 0-1.21-.44-1.21-1.18zm-13.31-5.21c0 3.04 4.13 3.23 4.13 5.2 0 .98-1.12 1.33-2.19 1.33a6.01 6.01 0 0 1-3.04-.94l-.7 2.53a8.8 8.8 0 0 0 3.74.73c2.74 0 5.52-.95 5.52-4.1 0-2.98-4.14-3.55-4.14-5.08 0-.97 1.19-1.23 2.14-1.23.9 0 1.79.26 2.13.44l.69-2.38a13.27 13.27 0 0 0-2.98-.37c-2.53 0-5.3 1.01-5.3 3.87zm43.23-3.86A2.74 2.74 0 0 0 129.33 9c0 1.5 1.23 2.72 2.74 2.72A2.73 2.73 0 0 0 134.81 9c0-1.5-1.23-2.72-2.74-2.72zm.01 5.04A2.23 2.23 0 0 1 129.86 9c0-1.3.95-2.31 2.22-2.31 1.26 0 2.21 1.01 2.21 2.31s-.95 2.32-2.2 2.32zm1.28-3.02c0-.6-.36-.9-1.1-.9h-1.23v3.2h.52V9.17h.44l.9 1.41h.55l-.91-1.4c.5 0 .83-.38.83-.89zm-1.81.48V7.8h.62c.34 0 .66.1.66.47 0 .41-.26.5-.66.5h-.62z'></path>
-                                </svg>
-                              </div>
-
-                              <div className=' cWeWMl'>
-                                <div className=' bHIhNV snipcss-W5hsS'>
-                                  <div class='TicketInfoHeader__HeaderContainer-sc-101wb79-0 ctixpn'>
-                                    <h2
-                                      translate='no'
-                                      class='TicketInfoHeader__HeaderTitle-sc-101wb79-1 sbbQd'
-                                    >
-                                      {ticket.type || 'Boleto Normal'}
-                                    </h2>
-
-                                    <div class='TicketInfoHeader__CtaContent-sc-101wb79-3 iNLuyq'>
-                                      <button
-                                        type='button'
-                                        class='IconButton__Button-sc-19baojp-0 jyRnZr TicketInfoHeader__TicketInfoButton-sc-101wb79-4 LEFMQ'
-                                      >
-                                        <span class='VisuallyHidden-sc-8buqks-0 lmhoCy'>
-                                          Información importante
-                                        </span>
-                                        <svg
-                                          viewBox='0 0 24 25'
-                                          width='1.5em'
-                                          height='1.5em'
-                                          aria-hidden='true'
-                                          focusable='false'
-                                          class='BaseSvg-sc-yh8lnd-0 InfoICircledIcon___StyledBaseSvg-sc-abq1mc-0 hNajXU'
-                                        >
-                                          <path d='M12 22a9.5 9.5 0 1 1 0-19 9.5 9.5 0 0 1 0 19m0 1.5a11 11 0 1 0 0-22 11 11 0 0 0 0 22 M11 6.5v2h2v-2zm.5 5v7H13V10h-2.75v1.5z' />
-                                        </svg>
-                                      </button>
-                                    </div>
-                                  </div>
-                                  <div className='ficefJ'>
-                                    <div className='SeatInfov2__Row-sc-hzxzxj-0 hXYMZK'>
-                                      <div className=' ftTdK'>
-                                        <p className=' dXJLXg'>Sección</p>
-                                        <p translate='no' className=' ia-dyIj'>
-                                          {ticket.section || 'N/A'}
-                                        </p>
-                                      </div>
-                                      <div className='jPmdZv'>
-                                        <p className=' dXJLXg'>Fila</p>
-                                        <p translate='no' className=' cRtdJv'>
-                                          {ticket.row || 'N/A'}
-                                        </p>
-                                      </div>
-                                      <div className=' dkuubl'>
-                                        <p className='dXJLXg'>Asiento(s)</p>
-                                        <p translate='no' className=' elGusI'>
-                                          {ticket.seat || 'N/A'}
-                                        </p>
-                                      </div>
-                                    </div>
-                                  </div>
+                              <div
+                                data-testid='ticketCard'
+                                className='TicketCardv2__Card-sc-1akc5v-0 kxlGTJ'
+                              >
+                                <div className='TicketCardv2__TicketHeaderBorderContainer-sc-1akc5v-2 kbjGha'>
+                                  <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='#ffffff'
+                                    width='100%'
+                                    height='100%'
+                                    viewBox='0 0 135 24'
+                                    aria-hidden='true'
+                                    style={{}}
+                                  >
+                                    <path
+                                      d='M41.57 6.27c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a9 9 0 0 1-3.75.86c-2.04 0-3.23-.71-3.39-2.62-.01-.12-.03-.22-.03-.34v-.1c.02-.84.2-1.66.53-2.41.6-1.55 1.47-2.62 3.35-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83h-4.36a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm-5.4.28h-4.15l-4.44 4.41h-.05L29.65 1h-3.19l-3.78 17.7h3.11l1.38-6.44h.05l3.16 6.45h3.6l-3.7-6.62 5.88-5.54zm15.16 8.8a5 5 0 0 1 .15-1.18l1.16-5.3h2.86l.5-2.32h-2.86l.79-3.61-3.42 1.1-.55 2.5h-2.3l-.51 2.32h2.3l-.9 4.11c-.2.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.69 3.2.54 0 1.16-.18 1.7-.3l.56-2.45a4.28 4.28 0 0 1-1.55.28c-.72 0-1.22-.44-1.22-1.18zm-47.14 0c0-.47.07-.9.14-1.18l1.16-5.3h2.86l.5-2.32H5.99l.79-3.61-3.43 1.1-.54 2.5H.5L0 8.87h2.3l-.9 4.11c-.21.97-.4 1.89-.4 2.83C1 18.14 2.52 19 4.69 19c.54 0 1.16-.18 1.7-.3l.56-2.45a4.27 4.27 0 0 1-1.55.28c-.71 0-1.22-.44-1.22-1.18zm12.48-1.98c0-2.29 1.42-4.65 3.97-4.65.88 0 1.7.21 2.33.62l.78-2.6a11.4 11.4 0 0 0-3.19-.47c-4.4 0-7.22 3.23-7.22 7.48 0 3.14 2.04 5.24 5.2 5.24 1.05 0 2.1-.1 3.07-.57l.36-2.5c-.83.4-1.81.61-2.6.61-2.18 0-2.7-1.58-2.7-3.16zM14.5 1.31h-3.19l-.67 3.02h3.2l.66-3.02zm-4.36 5.24L7.54 18.7h3.19l2.61-12.16h-3.19zm72.06-.27c-1.43 0-2.81.26-4.17.73l-.45 2.53a9.48 9.48 0 0 1 4.02-.95c1.12 0 2.45.35 2.45 1.58 0 .36 0 .71-.1 1.04h-1.11c-3 0-7.52.3-7.52 4.32 0 2.24 1.57 3.47 3.78 3.47 1.76 0 2.86-.78 3.95-2.15h.05l-.33 1.87h2.68c.29-2.3 1.5-7.06 1.5-8.7 0-2.85-2.3-3.74-4.75-3.74zM80 16.68c-.82 0-1.62-.42-1.62-1.27 0-2.05 2.56-2.31 4.1-2.31h1.13c-.5 1.96-1.24 3.58-3.61 3.58zM71.6 6.27c-1.72 0-3.5.73-4.31 2.31h-.05c-.17-1.47-1.67-2.31-3.12-2.31-1.5 0-2.9.66-3.75 1.9h-.05l.29-1.62h-2.98l-.26 1.35-2.23 10.8h3.18l1.26-5.78c.4-1.63 1-4.2 3.16-4.2.82 0 1.5.57 1.5 1.46 0 .74-.23 1.87-.4 2.6l-1.28 5.93h3.18L67 12.92c.4-1.65.95-4.2 3.17-4.2.8 0 1.5.57 1.5 1.46 0 .74-.24 1.87-.4 2.6l-1.3 5.93h3.2l1.27-5.81c.27-1 .55-2.22.55-3.3a3.4 3.4 0 0 0-3.4-3.33zm41.24 0c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a9 9 0 0 1-3.75.86c-2.04 0-3.23-.71-3.38-2.62-.01-.12-.03-.22-.03-.34v-.1c.02-.84.2-1.66.53-2.41.6-1.55 1.47-2.62 3.35-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83h-4.36a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm10.18 2.57h-.05l.43-2.3h-3.05l-.28 1.64-2.19 10.53h3.19l1.14-5.46c.4-1.96 1.5-3.96 3.76-3.96.4 0 .85.07 1.2.19l.68-3.1a4.9 4.9 0 0 0-1.22-.11c-1.47 0-3.04 1.25-3.61 2.57zm-20.87 6.51c0-.47.07-.9.14-1.18l1.17-5.3h2.85l.5-2.32h-2.85l.78-3.61-3.42 1.1-.55 2.5h-2.3l-.5 2.32h2.3l-.9 4.11c-.22.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.68 3.2.55 0 1.17-.18 1.71-.3l.55-2.45c-.4.17-.98.28-1.55.28-.71 0-1.21-.44-1.21-1.18zm-13.31-5.21c0 3.04 4.13 3.23 4.13 5.2 0 .98-1.12 1.33-2.19 1.33a6.01 6.01 0 0 1-3.04-.94l-.7 2.53a8.8 8.8 0 0 0 3.74.73c2.74 0 5.52-.95 5.52-4.1 0-2.98-4.14-3.55-4.14-5.08 0-.97 1.19-1.23 2.14-1.23.9 0 1.79.26 2.13.44l.69-2.38a13.27 13.27 0 0 0-2.98-.37c-2.53 0-5.3 1.01-5.3 3.87zm43.23-3.86A2.74 2.74 0 0 0 129.33 9c0 1.5 1.23 2.72 2.74 2.72A2.73 2.73 0 0 0 134.81 9c0-1.5-1.23-2.72-2.74-2.72zm.01 5.04A2.23 2.23 0 0 1 129.86 9c0-1.3.95-2.31 2.22-2.31 1.26 0 2.21 1.01 2.21 2.31s-.95 2.32-2.2 2.32zm1.28-3.02c0-.6-.36-.9-1.1-.9h-1.23v3.2h.52V9.17h.44l.9 1.41h.55l-.91-1.4c.5 0 .83-.38.83-.89zm-1.81.48V7.8h.62c.34 0 .66.1.66.47 0 .41-.26.5-.66.5h-.62z'
+                                      style={{}}
+                                    />
+                                  </svg>
                                 </div>
-                                <div className='sc-1wihujv-0 IATdI'>
-                                  <div>
-                                    <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
-                                      Código QR requerido para acceder.
-                                    </span>
-                                    <div
-                                      id=':r2:-882325277210255536E'
-                                      data-testid='barcode-container'
-                                    >
-                                      <div
-                                        id='pseview-3763052220'
-                                        className='style-bxhcO'
+
+                                <div className=' cWeWMl'>
+                                  <div className=' bHIhNV snipcss-W5hsS'>
+                                    <div class='TicketInfoHeader__HeaderContainer-sc-101wb79-0 ctixpn'>
+                                      <h2
+                                        translate='no'
+                                        class='TicketInfoHeader__HeaderTitle-sc-101wb79-1 sbbQd'
                                       >
-                                        <div
-                                          id='psetokenview-div-3763052220'
-                                          className='style-ooftK'
+                                        {ticket.type || 'Boleto Normal'}
+                                      </h2>
+
+                                      <div class='TicketInfoHeader__CtaContent-sc-101wb79-3 iNLuyq'>
+                                        <button
+                                          type='button'
+                                          onClick={() => togglePanel(ticket.id)}
+                                          class='IconButton__Button-sc-19baojp-0 jyRnZr TicketInfoHeader__TicketInfoButton-sc-101wb79-4 LEFMQ'
                                         >
-                                          <canvas
-                                            id='psetokenview-canvas-3763052220'
-                                            width={600}
-                                            height={150}
-                                            className='style-y7qGm style-hbhso'
-                                          />
+                                          <span class='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                                            Información importante
+                                          </span>
+                                          <svg
+                                            viewBox='0 0 24 25'
+                                            width='1.5em'
+                                            height='1.5em'
+                                            aria-hidden='true'
+                                            focusable='false'
+                                            class='BaseSvg-sc-yh8lnd-0 InfoICircledIcon___StyledBaseSvg-sc-abq1mc-0 hNajXU'
+                                          >
+                                            <path d='M12 22a9.5 9.5 0 1 1 0-19 9.5 9.5 0 0 1 0 19m0 1.5a11 11 0 1 0 0-22 11 11 0 0 0 0 22 M11 6.5v2h2v-2zm.5 5v7H13V10h-2.75v1.5z' />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div className='ficefJ'>
+                                      <div className='SeatInfov2__Row-sc-hzxzxj-0 hXYMZK'>
+                                        <div className=' ftTdK'>
+                                          <p className=' dXJLXg'>Sección</p>
                                           <p
-                                            id='psetokenview-subtitle-3763052220'
-                                            className='style-QOP54'
+                                            translate='no'
+                                            className=' ia-dyIj'
                                           >
-                                            No podrás entrar con capturas de
-                                            pantalla.{' '}
+                                            {ticket.section || 'N/A'}
                                           </p>
-                                          <div
-                                            id='style-vvnVH'
-                                            className='style-vvnVH'
-                                          >
-                                            <div
-                                              id='style-d2twm'
-                                              className='style-d2twm'
-                                            />
-                                            <div
-                                              id='style-wvqr2'
-                                              className='style-wvqr2'
-                                            />
-                                          </div>
+                                        </div>
+                                        <div className='jPmdZv'>
+                                          <p className=' dXJLXg'>Fila</p>
+                                          <p translate='no' className=' cRtdJv'>
+                                            {ticket.row || 'N/A'}
+                                          </p>
+                                        </div>
+                                        <div className=' dkuubl'>
+                                          <p className='dXJLXg'>Asiento(s)</p>
+                                          <p translate='no' className=' elGusI'>
+                                            {ticket.seat || 'N/A'}
+                                          </p>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-                                  <span
-                                    data-testid='rawBarcode'
-                                    className='sc-1wihujv-7 cgLgHD'
-                                  >
-                                    {ticket.barcode || 'BARCODE'}99080
-                                  </span>
-                                  <span
-                                    translate='no'
-                                    className='sc-1wihujv-6 kBskR'
-                                  >
-                                    SECCION {ticket.section || 'C'}{' '}
-                                  </span>
-                                </div>
-                                <div className='sc-qqwkxz-0 hTChRU'>
-                                  <a href='#' className='sc-443kj5-0 bgZgcx'>
-                                    {(() => {
-                                      const browser = detectBrowser()
-                                      return (
-                                        <img
-                                          alt={getWalletAltText(browser)}
-                                          src={getWalletImage(browser)}
-                                          className='sc-443kj5-1 fkNIKz'
-                                        />
-                                      )
-                                    })()}
-                                  </a>
-                                </div>
-                                <div className='sc-14dpb0e-8 kKcdWj'>
-                                  <span className='sc-14dpb0e-3 frPlCK' />
+                                  <div className='sc-1wihujv-0 IATdI'>
+                                    <div>
+                                      <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                                        Código QR requerido para acceder.
+                                      </span>
+                                      <div
+                                        id=':r2:-882325277210255536E'
+                                        data-testid='barcode-container'
+                                      >
+                                        <div
+                                          id='pseview-3763052220'
+                                          className='style-bxhcO'
+                                        >
+                                          <div
+                                            id='psetokenview-div-3763052220'
+                                            className='style-ooftK'
+                                          >
+                                            <DynamicPDF417 />
+                                            <p
+                                              id='psetokenview-subtitle-3763052220'
+                                              className='style-QOP54'
+                                            >
+                                              No podrás entrar con capturas de
+                                              pantalla.{' '}
+                                            </p>
+                                            <div
+                                              id='style-vvnVH'
+                                              className='style-vvnVH'
+                                            >
+                                              <div
+                                                id='style-d2twm'
+                                                className='style-d2twm'
+                                              />
+                                              <div
+                                                id='style-wvqr2'
+                                                className='style-wvqr2'
+                                              />
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <span
+                                      data-testid='rawBarcode'
+                                      className='sc-1wihujv-7 cgLgHD'
+                                    >
+                                      {ticket.barcode || 'BARCODE'}99080
+                                    </span>
+                                    <span
+                                      translate='no'
+                                      className='sc-1wihujv-6 kBskR'
+                                    >
+                                      {ticket.gate}
+                                    </span>
+                                  </div>
+                                  <div className='sc-qqwkxz-0 hTChRU'>
+                                    <a href='#' className='sc-443kj5-0 bgZgcx'>
+                                      {(() => {
+                                        const browser = detectBrowser()
+                                        return (
+                                          <img
+                                            alt={getWalletAltText(browser)}
+                                            src={getWalletImage(browser)}
+                                            className='sc-443kj5-1 fkNIKz'
+                                          />
+                                        )
+                                      })()}
+                                    </a>
+                                  </div>
+                                  <div className='sc-14dpb0e-8 kKcdWj'>
+                                    <span className='sc-14dpb0e-3 frPlCK' />
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </li>
+                            </li>
+                           
+                          </>
                         )
                       )
                     ) : (
-                      <li className='text-center py-8'>
-                        <p className='text-gray-500'>
-                          No hay boletos disponibles
-                        </p>
-                      </li>
+                      
+                      <hr></hr>
                     )}
                   </ul>
                   <div aria-hidden='true' className='sc-10n2nf8-0 cDdkhf' />
                 </div>
+               
+{order.ticketsTransferredCount > 0 && (
+  <div>
+    {/* Contenido del div */}
+    <div style={{}} className=''>
+      <h2
+        id='transfer-tickets'
+        tabIndex={-1}
+        aria-live='polite'
+        className='sc-857afa0f-0 cA-dlmF'
+        style={{}}
+      >
+        Transfers
+      </h2>
+      <div className='sc-4f88cc1d-0 diBUcg'>
+        <div className='sc-4f88cc1d-1 ffiOin'>
+          <div
+            data-testid='deliveryInfo'
+            className='sc-df282770-0 fmUBef'
+            style={{}}
+          >
+            <svg
+              viewBox='0 0 24 24'
+              width='1.5em'
+              height='1.5em'
+              aria-hidden='true'
+              focusable='false'
+              className='BaseSvg-sc-yh8lnd-0 TicketArrowsIcon___StyledBaseSvg-sc-1ydwagv-0 hsRbmG'
+            >
+              <path
+                d='M16.92 1H1v19.55h8.6v-1.5H2.51V2.5H15.4v10.72h-2.16v1.5h6.92l-1.42 1.46 1.09 1.04L23 13.97l-3.17-3.2-1.09 1.05 1.4 1.4h-3.22zM3.87 14.72h7.51v-1.5H3.87zm5.36 2.72H3.87v-1.5h5.36zm4.79-12.37H3.92v6.8h10.1zm-8.6 5.3v-3.8h7.08v3.8zm5.9-1.15H6.6v-1.5h4.73zm4 8.37-1.42 1.47h6.92v1.5h-6.9l1.4 1.39L14.24 23l-3.18-3.18 3.17-3.26z'
+                className=''
+              />
+            </svg>
+            <div className='sc-df282770-1 iUqVUw'>
+              <p className='sc-df282770-2 cqCFhO'>
+                <strong className=''>×{order.ticketsTransferredCount}</strong> For Transfer
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='sc-9d9011f3-0 dBPxRn sc-314dea0f-0 iwsXPW'>
+                   
+                    {order.ticketsTransferred && order.ticketsTransferred.length > 0 && (
+  <div>
+    <ul
+                    id='ticket-container'
+                    className='sc-235i9s-0 qhsHC sc-1gxt77a-1 iAwZiM'
+                  >
+      {order.ticketsTransferred.map((ticket, index) => (
+
+ <li
+                              key={ticket.id || index}
+                              className='sc-knkt5x-0 jrtQbZ sc-1gxt77a-2 tUato snipcss-2Ib6L snipcss-ZmcFP style-EQIUf'
+                              id='style-EQIUf'
+                            >
+                              <div
+                                data-testid='ticketCard'
+                                className='TicketCardv2__Card-sc-1akc5v-0 kxlGTJ'
+                              >
+                                <div className='TicketCardv2__TicketHeaderBorderContainer-sc-1akc5v-2 kbjGha'                                    style={{backgroundColor:'#c1c1c1'}}
+ >
+                                  <svg
+                                    xmlns='http://www.w3.org/2000/svg'
+                                    fill='#ffffff'
+                                    width='100%'
+                                    height='100%'
+                                    viewBox='0 0 135 24'
+                                    aria-hidden='true'
+                                    style={{}}
+                                  >
+                                    <path
+                                      d='M41.57 6.27c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a9 9 0 0 1-3.75.86c-2.04 0-3.23-.71-3.39-2.62-.01-.12-.03-.22-.03-.34v-.1c.02-.84.2-1.66.53-2.41.6-1.55 1.47-2.62 3.35-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83h-4.36a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm-5.4.28h-4.15l-4.44 4.41h-.05L29.65 1h-3.19l-3.78 17.7h3.11l1.38-6.44h.05l3.16 6.45h3.6l-3.7-6.62 5.88-5.54zm15.16 8.8a5 5 0 0 1 .15-1.18l1.16-5.3h2.86l.5-2.32h-2.86l.79-3.61-3.42 1.1-.55 2.5h-2.3l-.51 2.32h2.3l-.9 4.11c-.2.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.69 3.2.54 0 1.16-.18 1.7-.3l.56-2.45a4.28 4.28 0 0 1-1.55.28c-.72 0-1.22-.44-1.22-1.18zm-47.14 0c0-.47.07-.9.14-1.18l1.16-5.3h2.86l.5-2.32H5.99l.79-3.61-3.43 1.1-.54 2.5H.5L0 8.87h2.3l-.9 4.11c-.21.97-.4 1.89-.4 2.83C1 18.14 2.52 19 4.69 19c.54 0 1.16-.18 1.7-.3l.56-2.45a4.27 4.27 0 0 1-1.55.28c-.71 0-1.22-.44-1.22-1.18zm12.48-1.98c0-2.29 1.42-4.65 3.97-4.65.88 0 1.7.21 2.33.62l.78-2.6a11.4 11.4 0 0 0-3.19-.47c-4.4 0-7.22 3.23-7.22 7.48 0 3.14 2.04 5.24 5.2 5.24 1.05 0 2.1-.1 3.07-.57l.36-2.5c-.83.4-1.81.61-2.6.61-2.18 0-2.7-1.58-2.7-3.16zM14.5 1.31h-3.19l-.67 3.02h3.2l.66-3.02zm-4.36 5.24L7.54 18.7h3.19l2.61-12.16h-3.19zm72.06-.27c-1.43 0-2.81.26-4.17.73l-.45 2.53a9.48 9.48 0 0 1 4.02-.95c1.12 0 2.45.35 2.45 1.58 0 .36 0 .71-.1 1.04h-1.11c-3 0-7.52.3-7.52 4.32 0 2.24 1.57 3.47 3.78 3.47 1.76 0 2.86-.78 3.95-2.15h.05l-.33 1.87h2.68c.29-2.3 1.5-7.06 1.5-8.7 0-2.85-2.3-3.74-4.75-3.74zM80 16.68c-.82 0-1.62-.42-1.62-1.27 0-2.05 2.56-2.31 4.1-2.31h1.13c-.5 1.96-1.24 3.58-3.61 3.58zM71.6 6.27c-1.72 0-3.5.73-4.31 2.31h-.05c-.17-1.47-1.67-2.31-3.12-2.31-1.5 0-2.9.66-3.75 1.9h-.05l.29-1.62h-2.98l-.26 1.35-2.23 10.8h3.18l1.26-5.78c.4-1.63 1-4.2 3.16-4.2.82 0 1.5.57 1.5 1.46 0 .74-.23 1.87-.4 2.6l-1.28 5.93h3.18L67 12.92c.4-1.65.95-4.2 3.17-4.2.8 0 1.5.57 1.5 1.46 0 .74-.24 1.87-.4 2.6l-1.3 5.93h3.2l1.27-5.81c.27-1 .55-2.22.55-3.3a3.4 3.4 0 0 0-3.4-3.33zm41.24 0c-4.02 0-6.97 3.63-6.97 7.4 0 3.62 2.38 5.32 5.9 5.32 1.3 0 2.66-.3 3.9-.68l.4-2.5a9 9 0 0 1-3.75.86c-2.04 0-3.23-.71-3.38-2.62-.01-.12-.03-.22-.03-.34v-.1c.02-.84.2-1.66.53-2.41.6-1.55 1.47-2.62 3.35-2.62 1.33 0 2.02.73 2.02 2.03 0 .28-.02.54-.07.83h-4.36a7.57 7.57 0 0 0-.34 2.17h7.5c.2-.9.32-1.8.32-2.72 0-3.09-2-4.62-5.02-4.62zm10.18 2.57h-.05l.43-2.3h-3.05l-.28 1.64-2.19 10.53h3.19l1.14-5.46c.4-1.96 1.5-3.96 3.76-3.96.4 0 .85.07 1.2.19l.68-3.1a4.9 4.9 0 0 0-1.22-.11c-1.47 0-3.04 1.25-3.61 2.57zm-20.87 6.51c0-.47.07-.9.14-1.18l1.17-5.3h2.85l.5-2.32h-2.85l.78-3.61-3.42 1.1-.55 2.5h-2.3l-.5 2.32h2.3l-.9 4.11c-.22.97-.4 1.89-.4 2.83 0 2.34 1.52 3.2 3.68 3.2.55 0 1.17-.18 1.71-.3l.55-2.45c-.4.17-.98.28-1.55.28-.71 0-1.21-.44-1.21-1.18zm-13.31-5.21c0 3.04 4.13 3.23 4.13 5.2 0 .98-1.12 1.33-2.19 1.33a6.01 6.01 0 0 1-3.04-.94l-.7 2.53a8.8 8.8 0 0 0 3.74.73c2.74 0 5.52-.95 5.52-4.1 0-2.98-4.14-3.55-4.14-5.08 0-.97 1.19-1.23 2.14-1.23.9 0 1.79.26 2.13.44l.69-2.38a13.27 13.27 0 0 0-2.98-.37c-2.53 0-5.3 1.01-5.3 3.87zm43.23-3.86A2.74 2.74 0 0 0 129.33 9c0 1.5 1.23 2.72 2.74 2.72A2.73 2.73 0 0 0 134.81 9c0-1.5-1.23-2.72-2.74-2.72zm.01 5.04A2.23 2.23 0 0 1 129.86 9c0-1.3.95-2.31 2.22-2.31 1.26 0 2.21 1.01 2.21 2.31s-.95 2.32-2.2 2.32zm1.28-3.02c0-.6-.36-.9-1.1-.9h-1.23v3.2h.52V9.17h.44l.9 1.41h.55l-.91-1.4c.5 0 .83-.38.83-.89zm-1.81.48V7.8h.62c.34 0 .66.1.66.47 0 .41-.26.5-.66.5h-.62z'
+                                      style={{}}
+                                    />
+                                  </svg>
+                                </div>
+
+                                <div className=' cWeWMl'>
+                                  <div className=' bHIhNV snipcss-W5hsS'>
+                                    <div class='TicketInfoHeader__HeaderContainer-sc-101wb79-0 ctixpn'>
+                                      <h2
+                                        translate='no'
+                                        class='TicketInfoHeader__HeaderTitle-sc-101wb79-1 sbbQd'
+                                      >
+                                        {ticket.type || 'Boleto Normal'}
+                                      </h2>
+
+                                      <div class='TicketInfoHeader__CtaContent-sc-101wb79-3 iNLuyq'>
+                                        <button
+                                          type='button'
+                                          onClick={() => togglePanel(ticket.id)}
+                                          class='IconButton__Button-sc-19baojp-0 jyRnZr TicketInfoHeader__TicketInfoButton-sc-101wb79-4 LEFMQ'
+                                        >
+                                          <span class='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                                            Información importante
+                                          </span>
+                                          <svg
+                                            viewBox='0 0 24 25'
+                                            width='1.5em'
+                                            height='1.5em'
+                                            aria-hidden='true'
+                                            focusable='false'
+                                            class='BaseSvg-sc-yh8lnd-0 InfoICircledIcon___StyledBaseSvg-sc-abq1mc-0 hNajXU'
+                                          >
+                                            <path d='M12 22a9.5 9.5 0 1 1 0-19 9.5 9.5 0 0 1 0 19m0 1.5a11 11 0 1 0 0-22 11 11 0 0 0 0 22 M11 6.5v2h2v-2zm.5 5v7H13V10h-2.75v1.5z' />
+                                          </svg>
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div className='ficefJ'>
+                                      <div className='SeatInfov2__Row-sc-hzxzxj-0 hXYMZK'>
+                                        <div className=' ftTdK'>
+                                          <p className=' dXJLXg'>Sección</p>
+                                          <p
+                                            translate='no'
+                                            className=' ia-dyIj'
+                                          >
+                                            {ticket.section || 'N/A'}
+                                          </p>
+                                        </div>
+                                        <div className='jPmdZv'>
+                                          <p className=' dXJLXg'>Fila</p>
+                                          <p translate='no' className=' cRtdJv'>
+                                            {ticket.row || 'N/A'}
+                                          </p>
+                                        </div>
+                                        <div className=' dkuubl'>
+                                          <p className='dXJLXg'>Asiento(s)</p>
+                                          <p translate='no' className=' elGusI'>
+                                            {ticket.seat || 'N/A'}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                    <div className="sc-fdc4d819-3 fMoFNQ snipcss0-1-1-20" style={{}}>
+  <svg
+    data-testid="checkmark-success"
+    viewBox="0 0 24 24"
+    width="1.5em"
+    height="1.5em"
+    aria-hidden="true"
+    focusable="false"
+    className="BaseSvg-sc-yh8lnd-0 CheckmarkCircledFilledIcon___StyledBaseSvg-sc-8x9s3w-0 cXMMus snipcss0-2-20-21"
+  >
+    <path
+      d="M23 12a11 11 0 1 1-22 0 11 11 0 0 1 22 0m-12.96 5.1 7.52-8.6-1.12-1-6.48 7.4-2.43-2.43-1.06 1.06z"
+      className=""
+    />
+  </svg>
+  <p className="sc-fdc4d819-1 iFYbjL snipcss0-2-20-22" style={{}}>
+    Transfer Complete
+  </p>
+  <div className="sc-fdc4d819-2 fXvunU snipcss0-2-20-23" style={{}}>
+    Sent to: {ticket.recipient_email} || 
+  </div>
+</div>
+<div
+  className="sc-54483184-2 sc-93a0d7de-5 jhbLDE iGbcHf snipcss0-1-1-24"
+  style={{}}
+>
+  <div className="snipcss0-2-24-25" style={{}}>
+    Transfer ID: {ticket.transfer_number}
+  </div>
+</div>
+
+                                    
+                                  
+                                </div>
+                              </div>
+                            </li>
+       
+      ))}
+    </ul>
+  </div>
+)}
+
+
+
+                    <div className=''>
+                      <button
+                        aria-hidden='true'
+                        className='SquareButton__StyledSquareButton-sc-1njhw9f-0 fWUjxZ sc-f4903e88-0 eZuiEJ __WebInspectorHideElement__'
+                        type='button'
+                      >
+                        <div className='SquareButton__IconWrapper-sc-1njhw9f-1 iXcSWy'>
+                          <svg
+                            viewBox='0 0 24 24'
+                            width='24px'
+                            height='24px'
+                            aria-hidden='true'
+                            focusable='false'
+                            className='BaseSvg-sc-yh8lnd-0 ArrowIcon___StyledBaseSvg-sc-1a38tug-0 ckLyyv'
+                          >
+                            <path
+                              d='m.94 12 9.53 9.53 1.06-1.06-7.6-7.6H23v-1.5H3.7l7.83-7.84-1.06-1.06z'
+                              className=''
+                            />
+                          </svg>
+                        </div>
+<span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                          Previous ticket
+                        </span>
+                      </button>
+                      <button
+                        className='SquareButton__StyledSquareButton-sc-1njhw9f-0 fWUjxZ sc-f4903e88-1 cxmoNo'
+                        type='button'
+                        style={{ display: 'block' }}
+                      >
+                        <div className='SquareButton__IconWrapper-sc-1njhw9f-1 iXcSWy'>
+                          <svg
+                            viewBox='0 0 24 24'
+                            width='24px'
+                            height='24px'
+                            rotate={180}
+                            aria-hidden='true'
+                            focusable='false'
+                            className='BaseSvg-sc-yh8lnd-0 ArrowIcon___StyledBaseSvg-sc-1a38tug-0 fNqxXG'
+                          >
+                            <path
+                              d='m.94 12 9.53 9.53 1.06-1.06-7.6-7.6H23v-1.5H3.7l7.83-7.84-1.06-1.06z'
+                              className=''
+                            />
+                          </svg>
+                        </div>
+                        <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                          Next ticket
+                        </span>
+                      </button>
+                    </div>
+                    <div aria-hidden='true' className='sc-219fdda5-0 dRNwfq'>
+                      <button className='sc-219fdda5-1 dNuPvC' />
+                    </div>
+                  </div>
+    </div>
+  </div>
+)}
+
+
+
+
+
+
+
+
+
               </div>
               <div className='sc-1ncw2qp-1 fiIrVE'>
                 <div className='sc-1ncw2qp-2 hPWqqR'>

@@ -1,0 +1,51 @@
+.barcode-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.barcode-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 150px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bar-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 216px;
+  height: 66px;
+  animation: moveBar 1.4s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.style-wvqr2 {
+  position: absolute;
+  top: 8px;
+  left: 0;
+  width: 8px;
+  height: 50px;
+  background-color: rgb(7, 108, 217);
+  opacity: 0.5;
+}
+
+.style-d2twm {
+  position: absolute;
+  top: 4px;
+  left: 10px;
+  width: 4px;
+  height: 58px;
+  background-color: rgb(7, 108, 217);
+}
+@keyframes moveBar {
+  from {
+    transform: translateX(0px);
+  }
+  to {
+    transform: translateX(202px);
+  }
+}

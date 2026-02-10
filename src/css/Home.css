@@ -245,7 +245,7 @@ html {
 
 .fTemVb { 
     position: relative; 
-    z-index: 2; 
+    z-index: 0; 
     display: flex; 
     -webkit-box-align: stretch; 
     align-items: stretch; 
@@ -266,7 +266,7 @@ html {
 .iFvUKK { 
     position: relative; 
     top: 0px; 
-    z-index: 5; 
+    z-index: 0; 
     display: flex; 
     flex-direction: column; 
     padding-right: 16px; 

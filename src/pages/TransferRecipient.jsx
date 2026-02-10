@@ -3,6 +3,8 @@ import { useState, useEffect } from 'react'
 import '../css/Aceptar.css'
 import { API_URL, getUser, authenticatedRequest } from '../api/index'
 import { AccordionList } from '../components/NavBar'
+import useRequireAuth from '../hooks/userAuth'
+import Modal from '../components/Modal'
 
 export default function TransferAccept () {
   const { transferNumber } = useParams()
@@ -79,16 +81,11 @@ export default function TransferAccept () {
 
   // ⏳ LOADING
   if (loading) {
-    return <p>Cargando transferencia...</p>
+    return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
 
-  // ❌ ERROR
   if (error) {
-    return (
-      <div className='min-h-screen flex items-center justify-center'>
-        <h2 className='text-xl font-semibold'>{error}</h2>
-      </div>
-    )
+    return <Modal isOpen text='Transferencia no encontrada' />
   }
 
   // 🟢 DATA OK
@@ -148,16 +145,16 @@ export default function TransferAccept () {
                   <div className='sc-ac84ae8c-1 eCSuhv'>
                     <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
                       <span>
-                        {event?.formatted_date?.full || 'Fecha del evento'}
+                        {event?.formattedDate?.shortdate || 'Fecha del evento'}
                       </span>
                     </span>
                     <span aria-hidden='true'>
                       <div aria-hidden='true' className='sc-9e0822bc-0 hVtRUE'>
                         <span className='sc-9e0822bc-1 WZplE'>
-                          {event?.formatted_date?.month || 'ENE'}
+                          {event?.formattedDate?.month || 'ENE'}
                         </span>
                         <span className='sc-9e0822bc-2 bPbuYF'>
-                          {event?.formatted_date?.day || '01'}
+                          {event?.formattedDate?.day || '01'}
                         </span>
                         <span className='sc-9e0822bc-3 fujPMM' />
                       </div>
@@ -165,7 +162,10 @@ export default function TransferAccept () {
                     <div className='sc-ac84ae8c-2 bFwEol'>
                       <div className='sc-ac84ae8c-3 cJKsqv'>
                         <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
-                          <span>Información del evento</span>
+                          <span>
+                            {event?.formattedDate?.shortdate ||
+                              'Fecha del evento'}
+                          </span>
                         </span>
                         <span aria-hidden='true'>
                           <div
@@ -173,7 +173,7 @@ export default function TransferAccept () {
                             className='sc-65bd7b91-0 hUIqBV'
                           >
                             <span className='sc-65bd7b91-1 dFiqCA'>
-                              {event?.info || 'Información del evento'}
+                              {event?.formattedDate?.shortDate || '01 Ene 2024'}
                             </span>
                           </div>
                         </span>
@@ -229,7 +229,7 @@ export default function TransferAccept () {
         <AccordionList />
       </div>
 
-      {transfer?.status === 'accepted' ? (
+      {transfer?.status === 'completed' ? (
         <div className='sc-7e332ac7-10 jTWxHJ snipcss-7k6lv'>
           <div className='sc-7e332ac7-12 kHglPF'>
             <div className='indexstyles__Card-sc-cvxwg8-0 sc-9638b0a6-0 dHWtvF bkLEXU'>

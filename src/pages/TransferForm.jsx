@@ -100,11 +100,8 @@ export default function TransferFormPage () {
       recipient_lastname: form.recipient_lastname,
       ticket_ids: form.ticket_ids,
       origin_order_id: order.id,
-      event_id: order.event.id
-    }
-
-    if (form.message.trim()) {
-      payload.message = form.message
+      event_id: order.event.id,
+      ...(form.message?.trim() && { message: form.message })
     }
 
     try {
@@ -134,40 +131,12 @@ export default function TransferFormPage () {
 
       const result = await response.json()
 
-      const transferData = {
-        event: order?.event,
-        recipientInfo: {
-          name: form.recipient_name,
-          lastname: form.recipient_lastname,
-          email: form.recipient_email
-        },
-        message: form.message || '',
-        selectedTickets:
-          order.tickets?.filter(t => form.ticket_ids.includes(t.id)) || []
-      }
-      localStorage.setItem('transferFormData', JSON.stringify(transferData))
-
-      const transferDataToSuccess = {
-        event: order.event,
-        selectedTickets:
-          order.tickets?.filter(t => form.ticket_ids.includes(t.id)) || [],
-        recipientInfo: {
-          name: form.recipient_name,
-          lastname: form.recipient_lastname,
-          email: form.recipient_email
-        },
-        message: form.message,
-        orderNumber,
-        transferResponse: result
-      }
-
-      localStorage.setItem(
-        'transferFormData',
-        JSON.stringify(transferDataToSuccess)
-      )
-      await refreshUserData()
-
-      navigate(`/user/order/${orderNumber}/transfer/success`)
+      navigate(`/user/order/${orderNumber}/transfer/success`, {
+        replace: true,
+        state: {
+          transfer: result
+        }
+      })
     } catch (err) {
       console.error(err)
       setSubmitError(err.message || 'Error al procesar la transferencia')
@@ -175,6 +144,7 @@ export default function TransferFormPage () {
       setIsSubmitting(false)
     }
   }
+
   if (loading) {
     return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
@@ -297,10 +267,10 @@ export default function TransferFormPage () {
                     <span aria-hidden='true'>
                       <div aria-hidden='true' className='sc-1eisn46-0 hPSPJL'>
                         <span className='sc-1eisn46-1 chthMZ'>
-                          {order?.event?.formatted_date?.month || 'ENE'}
+                          {order?.event?.formattedDate?.month || 'ENE'}
                         </span>
                         <span className='sc-1eisn46-2 iRCDqS'>
-                          {order?.event?.formatted_date?.day || '01'}
+                          {order?.event?.formattedDate?.day || '01'}
                         </span>
                       </div>
                     </span>
@@ -309,7 +279,7 @@ export default function TransferFormPage () {
                         <span aria-hidden='true'>
                           <div aria-hidden='true' className='sc-hkg1cn-0'>
                             <span className='sc-hkg1cn-1 khlcWQ'>
-                              {order?.event?.formatted_date?.time ||
+                              {order?.event?.formattedDate?.shortDate ||
                                 order?.event?.info ||
                                 'Información del evento'}
                             </span>

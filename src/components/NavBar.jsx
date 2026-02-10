@@ -134,10 +134,6 @@ export function AccordionList () {
 
   return (
     <nav aria-label='Cuenta' className='sc-3aee2bbf-0 eKzqlE snipcss-RbyUz'>
-      {user && (
-        <div className='sc-2eac59d2-0 hnrVgv sc-3aee2bbf-8 hyfQnY'></div>
-      )}
-
       {data.map((item, idx) => (
         <Accordion
           key={item.title}
@@ -785,7 +781,14 @@ export function AccordionListPanel () {
   return (
     <nav aria-label='Cuenta' className='sc-3aee2bbf-0 eKzqlE snipcss-RbyUz'>
       {user && (
-        <div className='sc-2eac59d2-0 hnrVgv sc-3aee2bbf-8 hyfQnY'></div>
+<div className="sc-8486e8e9-0 jNtKcj sc-b7d876d8-8 jYKxSI" >
+  <p className="sc-8486e8e9-1 fmiwWm" style={{display: 'flex' , flexDirection: 'column'}}>
+    <span className="sc-8486e8e9-2 bPQSHE">¡Bienvenido de vuelta!</span>{" "}
+    <span data-cs-mask="true" style={{fontSize :'20px', fontWeight:'600'}} className="sc-8486e8e9-3 dCNtGc">
+      {user.name}
+    </span>
+  </p>
+</div>
       )}
 
       {data.map((item, idx) => (

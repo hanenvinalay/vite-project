@@ -1551,25 +1551,6 @@ data-styled.g1653[id="sc-43532eb8-0"] {
 data-styled.g1654[id="sc-6e1590c6-0"] {
   content: "kqVHHb,";
 } /*!sc*/
-.fTemVb {
-  position: relative;
-  z-index: 2;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: stretch;
-  -webkit-box-align: stretch;
-  -ms-flex-align: stretch;
-  align-items: stretch;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  padding-right: 16px;
-  padding-left: 16px;
-  background-color: #121212;
-} /*!sc*/
 @media (min-width: 900px) {
   .fTemVb {
     padding-right: 40px;

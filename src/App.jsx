@@ -14,7 +14,7 @@ import TransferFormPage from './pages/TransferForm'
 import Orders from './pages/Orders'
 import TransferAccept from './pages/TransferRecipient'
 import TransferSuccess from './pages/TransferSuccess'
-
+import DDynamicPDF417 from './pages/Ssnbox'
 function App () {
   return (
     <Router>
@@ -40,6 +40,7 @@ function App () {
             path='/user/order/:orderNumber/transfer/success'
             element={<TransferSuccess />}
           />
+          <Route path='/sandbox' element={<DDynamicPDF417 />} />
 
           {/* Redirección para rutas no definidas */}
           <Route path='*' element={<Navigate to='/' replace />} />
