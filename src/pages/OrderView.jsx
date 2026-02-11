@@ -4,6 +4,7 @@ import '../css/MisBoletos.css'
 import { AccordionLat } from '../components/NavBar'
 import {
   detectBrowser,
+  getAppStoreLink,
   getWalletImage,
   getWalletAltText
 } from '../utils/browserDetection'
@@ -322,55 +323,61 @@ const getTotalTickets = () => {
       </div>
       <div className='sc-12r1da7-9 GMACW'>
         <div className='sc-12r1da7-12 hByXSe'>
-          <nav
-            aria-label='Detalles de la compra'
-            className='sc-f7txxf-2 cEGSJy'
-          >
-            <div className='sc-gnidii-0 kqlDwu'>
-              <div
-                className='sc-gnidii-1 haoove'
-                role='tablist'
-                aria-orientation='horizontal'
-              >
-                <button
-                  id='tickets'
-                  data-testid='tab-tickets'
-                  role='tab'
-                  aria-controls='tickets-tabpanel'
-                  aria-selected={activeTab === 'tickets'}
-                  className='sc-gnidii-2 bCuajV tablinks active'
-                  onClick={() => setActiveTab('tickets')}
-                  tabIndex={activeTab === 'tickets' ? 0 : -1}
-                >
-                  Boletos
-                </button>
-                <button
-                  id='eventInfo'
-                  data-testid='tab-eventInfo'
-                  role='tab'
-                  aria-controls='eventInfo-tabpanel'
-                  aria-selected={activeTab === 'eventInfo'}
-                  className='sc-gnidii-2 bCuajV tablinks '
-                  onClick={() => setActiveTab('eventInfo')}
-                  tabIndex={activeTab === 'eventInfo' ? 0 : -1}
-                >
-                  Información de evento
-                </button>
-                <button
-                  id='venueInfo'
-                  data-testid='tab-venueInfo'
-                  role='tab'
-                  aria-controls='venueInfo-tabpanel'
-                  aria-selected={activeTab === 'venueInfo'}
-                  className='sc-gnidii-2 bCuajV tablinks '
-                  onClick={() => setActiveTab('venueInfo')}
-                  tabIndex={activeTab === 'venueInfo' ? 0 : -1}
-                >
-                  Información del inmueble
-                </button>
-              </div>
-            </div>
-          </nav>
+      <nav
+  aria-label="Detalles de la compra"
+  className="sc-f7txxf-2 cEGSJy"
+>
+  <div className="sc-gnidii-0 kqlDwu">
+    <div
+      className="sc-gnidii-1 haoove"
+      role="tablist"
+      aria-orientation="horizontal"
+    >
+      <button
+        id="tickets"
+        data-testid="tab-tickets"
+        role="tab"
+        aria-controls="tickets-tabpanel"
+        aria-selected={activeTab === "tickets"}
+        className={`sc-gnidii-2 tablinks ${
+          activeTab === "tickets" ? "active-tab" : ""
+        }`}
+        onClick={() => setActiveTab("tickets")}
+        tabIndex={activeTab === "tickets" ? 0 : -1}
+      >
+        Boletos
+      </button>
+      <button
+        id="eventInfo"
+        data-testid="tab-eventInfo"
+        role="tab"
+        aria-controls="eventInfo-tabpanel"
+        aria-selected={activeTab === "eventInfo"}
+        className={`sc-gnidii-2  tablinks ${
+          activeTab === "eventInfo" ? "active-tab" : ""
+        }`}
+        onClick={() => setActiveTab("eventInfo")}
+        tabIndex={activeTab === "eventInfo" ? 0 : -1}
+      >
+        Información de evento
+      </button>
+      <button
+        id="venueInfo"
+        data-testid="tab-venueInfo"
+        role="tab"
+        aria-controls="venueInfo-tabpanel"
+        aria-selected={activeTab === "venueInfo"}
+        className={`sc-gnidii-2  tablinks ${
+          activeTab === "venueInfo" ? "active-tab" : ""
+        }`}
+        onClick={() => setActiveTab("venueInfo")}
+        tabIndex={activeTab === "venueInfo" ? 0 : -1}
+      >
+        Información del inmueble
+      </button>
+    </div>
+  </div>
+</nav>
         </div>
       </div>
       <div className='sc-12r1da7-10 jRKBxK'>
@@ -565,6 +572,7 @@ const getTotalTickets = () => {
                         capturas de pantalla no serán válidas para ingresar al
                         evento.
                       </p>
+                      <img src={getAppStoreLink(detectBrowser())} alt="App Store Link" />
                     </div>
                   </div>
                 </div>

@@ -2635,56 +2635,73 @@ button {
   } 
 }     
 
-.tablinks.active { 
-    margin: initial; 
-    border-width: 0px 0px 2px; 
-    border-top-style: initial; 
-    border-right-style: initial; 
-    border-left-style: initial; 
-    border-top-color: initial; 
-    border-right-color: initial; 
-    border-left-color: initial; 
-    border-image: initial; 
-    font-size: inherit; 
-    font-family: inherit; 
-    line-height: inherit; 
-    letter-spacing: inherit; 
-    text-align: inherit; 
-    text-transform: inherit; 
-    background-color: transparent; 
-    border-bottom-style: solid; 
-    border-bottom-color: rgb(255, 255, 255); 
-    color: rgb(255, 255, 255); 
-    display: inline-block; 
-    padding: 8px 16px; 
-    font-weight: 600;
-} 
+
 
 .tablinks { 
-    margin: initial; 
-    border-width: 0px 0px 2px; 
-    border-top-style: initial; 
-    border-right-style: initial; 
-    border-left-style: initial; 
-    border-top-color: initial; 
-    border-right-color: initial; 
-    border-left-color: initial; 
-    border-image: initial; 
-    font-size: inherit; 
-    font-family: inherit; 
-    line-height: inherit; 
-    letter-spacing: inherit; 
-    text-align: inherit; 
-    text-transform: inherit; 
-    background-color: transparent; 
-    border-bottom-style: solid; 
-    border-bottom-color: transparent; 
-    color: rgba(255, 255, 255, 0.7); 
-    cursor: pointer; 
-    display: inline-block; 
-    padding: 8px 16px; 
-    font-weight: 600;
+   margin: initial;
+     border-width: 0px 0px 2px;
+     border-top-style: initial;
+     border-right-style: initial;
+     border-left-style: initial;
+     border-top-color: initial;
+     border-right-color: initial;
+     border-left-color: initial;
+     border-image: initial;
+     font-size: inherit;
+     font-family: inherit;
+     line-height: inherit;
+     letter-spacing: inherit;
+     text-align: inherit;
+     text-transform: inherit;
+     background-color: transparent;
+     border-bottom-style: solid;
+     border-bottom-color: transparent;
+     color: rgba(255, 255, 255, 0.8);
+     cursor: pointer;
+     display: inline-block;
+     padding: 8px 16px;
+     font-weight: 600;
 } 
+* {
+     box-sizing: inherit;
+}
+
+.hwlVhr {
+     position: relative;
+  background-color:blue;
+     padding: 0px 16px;
+     overflow-x: auto;
+     white-space: nowrap;
+}
+
+button {
+     font-family: inherit;
+}
+
+.active-tab {
+     margin: initial;
+     border-width: 0px 0px 2px;
+     border-top-style: initial;
+     border-right-style: initial;
+     border-left-style: initial;
+     border-top-color: initial;
+     border-right-color: initial;
+     border-left-color: initial;
+     border-image: initial;
+     font-size: inherit;
+     font-family: inherit;
+     line-height: inherit;
+     letter-spacing: inherit;
+     text-align: inherit;
+     text-transform: inherit;
+     background-color: transparent;
+     border-bottom-style: solid;
+     border-bottom-color: rgb(255, 255, 255);
+     color: rgb(255, 255, 255);
+     display: inline-block;
+     padding: 8px 16px;
+     font-weight: 600;
+}
 
 .fUOijd { 
     position: relative; 

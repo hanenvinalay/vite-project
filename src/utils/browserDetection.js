@@ -46,3 +46,16 @@ export const getWalletAltText = browser => {
 
   return altTexts[browser] || altTexts.other
 }
+
+export const getAppStoreLink = browser => {
+  const images  = {
+    safari: 'https://uk.tmconst.com/rc-51d3375a/images/logo/apple-store/en.svg',
+    chrome: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
+    firefox: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
+    edge: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
+    opera: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
+    other: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg'
+  }
+
+  return images[browser] || images.other
+}
