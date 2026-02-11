@@ -572,7 +572,7 @@ const getTotalTickets = () => {
                         capturas de pantalla no serán válidas para ingresar al
                         evento.
                       </p>
-                      <img src={getAppStoreLink(detectBrowser())} alt="App Store Link" />
+                      <img src={getAppStoreLink(detectBrowser())} alt="App Store Link" style={{ width:'auto', height:'38px'}} />
                     </div>
                   </div>
                 </div>
