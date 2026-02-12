@@ -544,10 +544,7 @@
           content: "";
       } 
       
-      .jAHAYc { 
-          margin-right: -16px; 
-          margin-left: -16px;
-      } 
+     
       
       .dBzWMW:before { 
           display: block; 
@@ -567,10 +564,7 @@
         } 
       }     
       
-      .iDDVVu { 
-          margin-right: -16px; 
-          margin-left: -16px;
-      } 
+      
       
       @media (min-width: 720px){ 
         .iDDVVu { 
@@ -819,13 +813,13 @@
       .iXiYSo { 
           margin: 16px 24px 0px;
       } 
-      
-      .dHWtvF { 
-          padding: 32px 24px; 
-          border-radius: 4px; 
-          background-color: rgb(255, 255, 255); 
-          box-shadow: rgba(18, 18, 18, 0.15) 0px 1px 4px 0px;
-      } 
+      .cfGQrC {
+    box-shadow: rgba(18, 18, 18, 0.15) 0px 1px 4px 0px;
+    padding: 32px 24px;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+}
+     
       
       .hLArtP > * + *  { 
           margin-top: 16px;

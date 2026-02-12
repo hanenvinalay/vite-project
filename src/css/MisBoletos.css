@@ -2140,6 +2140,99 @@ html {
     grid-template-columns: 100%; 
     background-color: rgb(246, 246, 246);
 } 
+* {
+     box-sizing: inherit;
+}
+
+.hLmhgy {
+     -webkit-box-flex: 1;
+     flex-grow: 1;
+     margin: 0px 12px 12px;
+     padding-top: 24px;
+     text-align: center;
+}
+
+.hNajXU {
+     display: inline-block;
+     flex-shrink: 0;
+     vertical-align: middle;
+     transition: transform 0.2s ease-out;
+     fill: rgb(2, 77, 223);
+}
+
+p {
+     margin: 0px 0px 1em;
+}
+
+.eKWMGV {
+     margin: 4px 0px 0px;
+     font-weight: 600;
+}
+
+.hPKWGu {
+     margin-top: 4px;
+     color: rgb(100, 100, 100);
+     text-align: center;
+     word-break: break-word;
+     overflow-wrap: break-word;
+}
+
+.hhBIiF {
+     margin-top: 20px;
+}
+
+button {
+     font-family: inherit;
+}
+
+.cmIqaX {
+     margin: initial;
+     border: 1px solid rgb(2, 77, 223);
+     font-family: inherit;
+     letter-spacing: inherit;
+     text-transform: inherit;
+     color: rgb(2, 77, 223);
+     background-color: transparent;
+     position: relative;
+     display: inline-block;
+     width: 100%;
+     min-height: 44px;
+     padding: 8px 16px;
+     border-radius: 4px;
+     font-weight: 600;
+     font-size: 16px;
+     line-height: 1.4;
+     white-space: normal;
+     text-align: center;
+     text-wrap-style: auto;
+     transition: background-color 0.2s;
+}
+
+.cmIqaX:not(:disabled) {
+     cursor: pointer;
+}
+
+.cmIqaX:disabled {
+     border-color: rgb(148, 148, 148);
+     color: rgb(148, 148, 148);
+     background-color: transparent;
+     cursor: not-allowed;
+}
+
+.cmIqaX:focus {
+     outline-offset: 4px;
+}
+
+.hJuAcy {
+     display: flex;
+     gap: 8px;
+     -webkit-box-align: center;
+     align-items: center;
+     -webkit-box-pack: center;
+     justify-content: center;
+     visibility: visible;
+}
+
 
 @media (min-width: 1050px){ 
   .efoHKt { 

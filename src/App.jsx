@@ -25,7 +25,7 @@ function App () {
         {/* Layout */}
         <Route element={<Layout />}>
           <Route path='/' element={<Home />} />
-          <Route path='/profile' element={<Profile />} />
+          <Route path='/profile/:orderNumber' element={<Profile />} />
           <Route path='user/orders' element={<Orders />} />
           <Route path='user/order/:orderNumber/view' element={<OrderView />} />
           <Route

@@ -983,28 +983,62 @@ const getTotalTickets = () => {
                                       </div>
                                     </div>
                                   </div>
-                                    <div className="sc-fdc4d819-3 fMoFNQ snipcss0-1-1-20" style={{}}>
+            {ticket.status === 'transferred' ? (
+        <div className="sc-fdc4d819-3 fMoFNQ snipcss0-1-1-20" style={{}}>
+          <svg
+            data-testid="checkmark-success"
+            viewBox="0 0 24 24"
+            width="1.5em"
+            height="1.5em"
+            aria-hidden="true"
+            focusable="false"
+            className="BaseSvg-sc-yh8lnd-0 CheckmarkCircledFilledIcon___StyledBaseSvg-sc-8x9s3w-0 cXMMus snipcss0-2-20-21"
+          >
+            <path
+              d="M23 12a11 11 0 1 1-22 0 11 11 0 0 1 22 0m-12.96 5.1 7.52-8.6-1.12-1-6.48 7.4-2.43-2.43-1.06 1.06z"
+              className=""
+            />
+          </svg>
+          <p className="sc-fdc4d819-1 iFYbjL snipcss0-2-20-22" style={{}}>
+            Transfer Complete
+          </p>
+          <div className="sc-fdc4d819-2 fXvunU snipcss0-2-20-23" style={{}}>
+            Sent to: {ticket.recipient_email || 'Correo no disponible'}
+          </div>
+        </div>
+      ) : (
+        <div className="sc-ed16ffde-3 hLmhgy" style={{}}>
   <svg
-    data-testid="checkmark-success"
+    data-testid="arrow-icon"
     viewBox="0 0 24 24"
-    width="1.5em"
-    height="1.5em"
+    width="1.2em"
+    height="1.2em"
     aria-hidden="true"
     focusable="false"
-    className="BaseSvg-sc-yh8lnd-0 CheckmarkCircledFilledIcon___StyledBaseSvg-sc-8x9s3w-0 cXMMus snipcss0-2-20-21"
+    className="BaseSvg-sc-yh8lnd-0 ArrowTopRightIcon___StyledBaseSvg-sc-cclnom-0 hNajXU"
   >
-    <path
-      d="M23 12a11 11 0 1 1-22 0 11 11 0 0 1 22 0m-12.96 5.1 7.52-8.6-1.12-1-6.48 7.4-2.43-2.43-1.06 1.06z"
-      className=""
-    />
+    <path d="M20 4H7.68v1.56h9.63L3.47 19.46l1.07 1.07 13.9-13.97v9.74H20z" />
   </svg>
-  <p className="sc-fdc4d819-1 iFYbjL snipcss0-2-20-22" style={{}}>
-    Transfer Complete
+  <p className="sc-ed16ffde-1 eKWMGV" style={{}}>
+    Transferencia pendiente
   </p>
-  <div className="sc-fdc4d819-2 fXvunU snipcss0-2-20-23" style={{}}>
-    Sent to: {ticket.recipient_email} || 
+  <div className="sc-ed16ffde-2 hPKWGu" style={{}}>
+    Enviar a: hanenvinalay2025@outlook.com
+  </div>
+  <div className="Stack-sc-br1alc-0 sc-ed16ffde-0 bcKaXb hhBIiF">
+    <button
+      type="button"
+      className="indexstyles__StyledButton-sc-83qv1q-0 cmIqaX"
+      style={{}}
+    >
+      <span className="indexstyles__FlexWrapper-sc-83qv1q-1 hJuAcy" style={{}}>
+        <span>Cancelar transferencia</span>
+      </span>
+    </button>
   </div>
 </div>
+
+      )}
 <div
   className="sc-54483184-2 sc-93a0d7de-5 jhbLDE iGbcHf snipcss0-1-1-24"
   style={{}}
