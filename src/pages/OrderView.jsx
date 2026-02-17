@@ -4,6 +4,7 @@ import '../css/MisBoletos.css'
 import { AccordionLat } from '../components/NavBar'
 import {
   detectBrowser,
+  detectOS,
   getAppStoreLink,
   getWalletImage,
   getWalletAltText
@@ -31,6 +32,7 @@ export default function OrderView () {
     }))
   }
   const user = getUser()
+  const deviceOS = detectOS()
 
   useEffect(() => {
     let isMounted = true
@@ -76,6 +78,18 @@ const getTotalTickets = () => {
 
   return ticketsCount + transferredCount;
 };
+
+  const getWalletLinkForTicket = ticket => {
+    if (deviceOS === 'android') {
+      return ticket?.googletoken || '#'
+    }
+
+    if (deviceOS === 'ios') {
+      return ticket?.pkpassUrl || '#'
+    }
+
+    return '#'
+  }
 
 // Uso de la función en el render
   return (
@@ -653,7 +667,10 @@ const getTotalTickets = () => {
                                   </span>
                                 </div>
                                 <div className='sc-qqwkxz-0 hTChRU'>
-                                  <a href='#' className='sc-443kj5-0 bgZgcx'>
+                                  <a
+                                    href={getWalletLinkForTicket(ticket)}
+                                    className='sc-443kj5-0 bgZgcx'
+                                  >
                                     {(() => {
                                       const browser = detectBrowser()
                                       return (
@@ -816,7 +833,10 @@ const getTotalTickets = () => {
                                     </span>
                                   </div>
                                   <div className='sc-qqwkxz-0 hTChRU'>
-                                    <a href='#' className='sc-443kj5-0 bgZgcx'>
+                                    <a
+                                      href={getWalletLinkForTicket(ticket)}
+                                      className='sc-443kj5-0 bgZgcx'
+                                    >
                                       {(() => {
                                         const browser = detectBrowser()
                                         return (
@@ -1023,7 +1043,7 @@ const getTotalTickets = () => {
     Transferencia pendiente
   </p>
   <div className="sc-ed16ffde-2 hPKWGu" style={{}}>
-    Enviar a: {}
+    Enviar a: 
   </div>
   <div className="Stack-sc-br1alc-0 sc-ed16ffde-0 bcKaXb hhBIiF">
     <button
