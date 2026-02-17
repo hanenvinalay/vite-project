@@ -1023,7 +1023,7 @@ const getTotalTickets = () => {
     Transferencia pendiente
   </p>
   <div className="sc-ed16ffde-2 hPKWGu" style={{}}>
-    Enviar a: hanenvinalay2025@outlook.com
+    Enviar a: {}
   </div>
   <div className="Stack-sc-br1alc-0 sc-ed16ffde-0 bcKaXb hhBIiF">
     <button
