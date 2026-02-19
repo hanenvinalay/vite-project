@@ -1,5 +1,8 @@
 // services/api.js
 //const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+// services/authApi.js
+
 export const API_URL = 'https://emails.ticketsmaster.com.mx/api'
 export const API_BASE_URL = API_URL
 
