@@ -79,6 +79,21 @@ const getTotalTickets = () => {
   return ticketsCount + transferredCount;
 };
 
+const getWalletLinkForTicket = ticket => {
+  if (deviceOS === 'android') {
+    // Maneja Google Wallet para Android
+    return ticket?.googletoken || ticket?.google_wallet_url || ticket?.googleWalletUrl || '#'
+  }
+
+  if (deviceOS === 'ios') {
+    // Maneja Apple Wallet PKPass para iOS
+    // Soporta múltiples nombres de campos que el backend podría usar
+    return ticket?.pkpassUrl || ticket?.pkpass_url || ticket?.pkpass || ticket?.apple_wallet_url || ticket?.appleWalletUrl || ticket?.wallet_url || '#'
+  }
+
+  return '#'
+}
+
 // Uso de la función en el render
   return (
     <div className='sc-12r1da7-0 efoHKt'>
@@ -820,7 +835,7 @@ const getTotalTickets = () => {
                                   <div className='sc-qqwkxz-0 hTChRU'>
                                     <a href='#' className='sc-443kj5-0 bgZgcx'>
                                       {(() => {
-                                        const browser = detectBrowser()
+                                        const browser = detectBrowser(t)
                                         return (
                                           <img
                                             alt={getWalletAltText(browser)}
@@ -1193,4 +1208,6 @@ const getTotalTickets = () => {
     </div>
   )
 }
+
+
 
