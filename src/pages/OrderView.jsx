@@ -68,31 +68,29 @@ export default function OrderView () {
     return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
 
-  const isOpen = ticketId => openPanel === ticketId // Función para verificar si un panel está abierto
-// Función para calcular el total de boletos
-const getTotalTickets = () => {
-  const ticketsCount = order.tickets ? order.tickets.length : 0;
-  const transferredCount = order.ticketsTransferred && order.ticketsTransferred.length > 0
-    ? order.ticketsTransferred.length
-    : 0;
+  const getTotalTickets = () => {
+    const ticketsCount = order.tickets ? order.tickets.length : 0;
+    const transferredCount = order.ticketsTransferred && order.ticketsTransferred.length > 0
+      ? order.ticketsTransferred.length
+      : 0;
 
-  return ticketsCount + transferredCount;
-};
+    return ticketsCount + transferredCount;
+  };
 
-const getWalletLinkForTicket = ticket => {
-  if (deviceOS === 'android') {
-    // Maneja Google Wallet para Android
-    return ticket?.googletoken || ticket?.google_wallet_url || ticket?.googleWalletUrl || '#'
+  const getWalletLinkForTicket = ticket => {
+    if (deviceOS === 'android') {
+      // Maneja Google Wallet para Android
+      return ticket?.googletoken || ticket?.google_wallet_url || ticket?.googleWalletUrl || '#'
+    }
+
+    if (deviceOS === 'ios') {
+      // Maneja Apple Wallet PKPass para iOS
+      // Soporta múltiples nombres de campos que el backend podría usar
+      return ticket?.pkpassUrl || ticket?.pkpass_url || ticket?.pkpass || ticket?.apple_wallet_url || ticket?.appleWalletUrl || ticket?.wallet_url || '#'
+    }
+
+    return '#'
   }
-
-  if (deviceOS === 'ios') {
-    // Maneja Apple Wallet PKPass para iOS
-    // Soporta múltiples nombres de campos que el backend podría usar
-    return ticket?.pkpassUrl || ticket?.pkpass_url || ticket?.pkpass || ticket?.apple_wallet_url || ticket?.appleWalletUrl || ticket?.wallet_url || '#'
-  }
-
-  return '#'
-}
 
 // Uso de la función en el render
   return (
@@ -669,20 +667,25 @@ const getWalletLinkForTicket = ticket => {
                                     {ticket.section} GRAL
                                   </span>
                                 </div>
-                                <div className='sc-qqwkxz-0 hTChRU'>
-                                  <a href='#' className='sc-443kj5-0 bgZgcx'>
-                                    {(() => {
-                                      const browser = detectBrowser()
-                                      return (
-                                        <img
-                                          alt={getWalletAltText(browser)}
-                                          src={getWalletImage(browser)}
-                                          className='sc-443kj5-1 fkNIKz'
-                                        />
-                                      )
-                                    })()}
-                                  </a>
-                                </div>
+                                {getWalletLinkForTicket(ticket) !== '#' && (
+                                  <div className='sc-qqwkxz-0 hTChRU'>
+                                    <a
+                                      href={getWalletLinkForTicket(ticket)}
+                                      className='sc-443kj5-0 bgZgcx'
+                                      download={deviceOS === 'ios' ? 'ticket.pkpass' : undefined}
+                                      {...(deviceOS !== 'ios' && { target: '_blank', rel: 'noopener noreferrer' })}
+                                    >
+                                      <img
+                                        alt={deviceOS === 'ios' ? 'Agregar a la Apple Wallet' : getWalletAltText(detectBrowser())}
+                                        src={deviceOS === 'ios' 
+                                          ? 'https://uk.tmconst.com/rc-01b9906d/images/wallet/Apple/es/Add_to_Apple_Wallet_rgb_ES-MX.svg'
+                                          : getWalletImage(detectBrowser())
+                                        }
+                                        className='sc-443kj5-1 fkNIKz'
+                                      />
+                                    </a>
+                                  </div>
+                                )}
                                 <div className='sc-14dpb0e-8 kKcdWj'>
                                   <span className='sc-14dpb0e-3 frPlCK' />
                                 </div>
@@ -832,20 +835,25 @@ const getWalletLinkForTicket = ticket => {
                                       {ticket.gate}
                                     </span>
                                   </div>
-                                  <div className='sc-qqwkxz-0 hTChRU'>
-                                    <a href='#' className='sc-443kj5-0 bgZgcx'>
-                                      {(() => {
-                                        const browser = detectBrowser(t)
-                                        return (
-                                          <img
-                                            alt={getWalletAltText(browser)}
-                                            src={getWalletImage(browser)}
-                                            className='sc-443kj5-1 fkNIKz'
-                                          />
-                                        )
-                                      })()}
-                                    </a>
-                                  </div>
+                                  {getWalletLinkForTicket(ticket) !== '#' && (
+                                    <div className='sc-qqwkxz-0 hTChRU'>
+                                      <a
+                                        href={getWalletLinkForTicket(ticket)}
+                                        className='sc-443kj5-0 bgZgcx'
+                                        download={deviceOS === 'ios' ? 'ticket.pkpass' : undefined}
+                                        {...(deviceOS !== 'ios' && { target: '_blank', rel: 'noopener noreferrer' })}
+                                      >
+                                        <img
+                                          alt={deviceOS === 'ios' ? 'Agregar a la Apple Wallet' : getWalletAltText(detectBrowser())}
+                                          src={deviceOS === 'ios' 
+                                            ? 'https://uk.tmconst.com/rc-01b9906d/images/wallet/Apple/es/Add_to_Apple_Wallet_rgb_ES-MX.svg'
+                                            : getWalletImage(detectBrowser())
+                                          }
+                                          className='sc-443kj5-1 fkNIKz'
+                                        />
+                                      </a>
+                                    </div>
+                                  )}
                                   <div className='sc-14dpb0e-8 kKcdWj'>
                                     <span className='sc-14dpb0e-3 frPlCK' />
                                   </div>
