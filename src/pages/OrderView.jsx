@@ -4,6 +4,7 @@ import '../css/MisBoletos.css'
 import { AccordionLat } from '../components/NavBar'
 import {
   detectBrowser,
+  detectOS,
   getAppStoreLink,
   getWalletImage,
   getWalletAltText
@@ -31,6 +32,7 @@ export default function OrderView () {
     }))
   }
   const user = getUser()
+  const deviceOS = detectOS()
 
   useEffect(() => {
     let isMounted = true
@@ -76,6 +78,21 @@ const getTotalTickets = () => {
 
   return ticketsCount + transferredCount;
 };
+
+  const getWalletLinkForTicket = ticket => {
+    if (deviceOS === 'android') {
+      // Maneja Google Wallet para Android
+      return ticket?.googletoken || ticket?.google_wallet_url || ticket?.googleWalletUrl || '#'
+    }
+
+    if (deviceOS === 'ios') {
+      // Maneja Apple Wallet PKPass para iOS
+      // Soporta múltiples nombres de campos que el backend podría usar
+      return ticket?.pkpassUrl || ticket?.pkpass_url || ticket?.pkpass || ticket?.apple_wallet_url || ticket?.appleWalletUrl || ticket?.wallet_url || '#'
+    }
+
+    return '#'
+  }
 
 // Uso de la función en el render
   return (
@@ -652,20 +669,25 @@ const getTotalTickets = () => {
                                     {ticket.section} GRAL
                                   </span>
                                 </div>
-                                <div className='sc-qqwkxz-0 hTChRU'>
-                                  <a href='#' className='sc-443kj5-0 bgZgcx'>
-                                    {(() => {
-                                      const browser = detectBrowser()
-                                      return (
-                                        <img
-                                          alt={getWalletAltText(browser)}
-                                          src={getWalletImage(browser)}
-                                          className='sc-443kj5-1 fkNIKz'
-                                        />
-                                      )
-                                    })()}
-                                  </a>
-                                </div>
+                                {getWalletLinkForTicket(ticket) !== '#' && (
+                                  <div className='sc-qqwkxz-0 hTChRU'>
+                                    <a
+                                      href={getWalletLinkForTicket(ticket)}
+                                      className='sc-443kj5-0 bgZgcx'
+                                      download={deviceOS === 'ios' ? 'ticket.pkpass' : undefined}
+                                      {...(deviceOS !== 'ios' && { target: '_blank', rel: 'noopener noreferrer' })}
+                                    >
+                                      <img
+                                        alt={deviceOS === 'ios' ? 'Agregar a la Apple Wallet' : getWalletAltText(detectBrowser())}
+                                        src={deviceOS === 'ios' 
+                                          ? 'https://uk.tmconst.com/rc-01b9906d/images/wallet/Apple/es/Add_to_Apple_Wallet_rgb_ES-MX.svg'
+                                          : getWalletImage(detectBrowser())
+                                        }
+                                        className='sc-443kj5-1 fkNIKz'
+                                      />
+                                    </a>
+                                  </div>
+                                )}
                                 <div className='sc-14dpb0e-8 kKcdWj'>
                                   <span className='sc-14dpb0e-3 frPlCK' />
                                 </div>
@@ -815,20 +837,25 @@ const getTotalTickets = () => {
                                       {ticket.gate}
                                     </span>
                                   </div>
-                                  <div className='sc-qqwkxz-0 hTChRU'>
-                                    <a href='#' className='sc-443kj5-0 bgZgcx'>
-                                      {(() => {
-                                        const browser = detectBrowser()
-                                        return (
-                                          <img
-                                            alt={getWalletAltText(browser)}
-                                            src={getWalletImage(browser)}
-                                            className='sc-443kj5-1 fkNIKz'
-                                          />
-                                        )
-                                      })()}
-                                    </a>
-                                  </div>
+                                  {getWalletLinkForTicket(ticket) !== '#' && (
+                                    <div className='sc-qqwkxz-0 hTChRU'>
+                                      <a
+                                        href={getWalletLinkForTicket(ticket)}
+                                        className='sc-443kj5-0 bgZgcx'
+                                        download={deviceOS === 'ios' ? 'ticket.pkpass' : undefined}
+                                        {...(deviceOS !== 'ios' && { target: '_blank', rel: 'noopener noreferrer' })}
+                                      >
+                                        <img
+                                          alt={deviceOS === 'ios' ? 'Agregar a la Apple Wallet' : getWalletAltText(detectBrowser())}
+                                          src={deviceOS === 'ios' 
+                                            ? 'https://uk.tmconst.com/rc-01b9906d/images/wallet/Apple/es/Add_to_Apple_Wallet_rgb_ES-MX.svg'
+                                            : getWalletImage(detectBrowser())
+                                          }
+                                          className='sc-443kj5-1 fkNIKz'
+                                        />
+                                      </a>
+                                    </div>
+                                  )}
                                   <div className='sc-14dpb0e-8 kKcdWj'>
                                     <span className='sc-14dpb0e-3 frPlCK' />
                                   </div>
@@ -1023,7 +1050,7 @@ const getTotalTickets = () => {
     Transferencia pendiente
   </p>
   <div className="sc-ed16ffde-2 hPKWGu" style={{}}>
-    Enviar a: hanenvinalay2025@outlook.com
+    Enviar a: {ticket.recipient_email || 'Correo no disponible'}
   </div>
   <div className="Stack-sc-br1alc-0 sc-ed16ffde-0 bcKaXb hhBIiF">
     <button
@@ -1044,7 +1071,7 @@ const getTotalTickets = () => {
   style={{}}
 >
   <div className="snipcss0-2-24-25" style={{}}>
-    Transfer ID: {ticket.transfer_number}
+    Transfer ID: {ticket.transfer_number || 'N/A'}
   </div>
 </div>
 

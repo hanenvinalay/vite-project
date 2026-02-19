@@ -1,6 +1,6 @@
 // services/api.js
 //const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-export const API_URL = 'https://emails.ticketsmaster.com.mx/api'
+export const API_URL = 'http://localhost:8000/api'
 export const API_BASE_URL = API_URL
 
 export async function fetchBase (endpoint, options = {}) {

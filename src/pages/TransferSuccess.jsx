@@ -3,12 +3,13 @@ import '../css/Transfersucess.css'
 import Modal from '../components/Modal'
 import { AccordionList } from '../components/NavBar'
 import { getUser } from '../api'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useParams, useNavigate } from 'react-router-dom'
 
 export default function TransferSuccess () {
   const navigate = useNavigate()
   const location = useLocation()
   const user = getUser()
+  const { orderNumber } = useParams()
 
   const [transfer, setTransfer] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -329,7 +330,7 @@ export default function TransferSuccess () {
                     style={{
                       marginTop: '16px',
                       padding: '12px',
-                      backgroundColor: '#fff3cd',
+                      backgroundColor: '#ffffff',
                       borderRadius: '4px'
                     }}
                   >
@@ -341,9 +342,10 @@ export default function TransferSuccess () {
                   <div className='sc-1ss8sxt-0 ixDTnq'>
                     <a
                       className='sc-jfe99z-1 cKVhWb indexstyles__StyledButton-sc-83qv1q-0 bnRBHg sc-1ss8sxt-1 frSXiK'
-                      href='/user/orders'
+                      href={`/user/order/${orderNumber}/view`}
                     >
                       <span className='indexstyles__FlexWrapper-sc-83qv1q-1 kCQEIv'>
+
                         <span className='indexstyles__Text-sc-83qv1q-2 jHTUWf'>
                           Regresar a mis boletos
                         </span>

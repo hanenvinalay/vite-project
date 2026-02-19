@@ -6,7 +6,7 @@ import { AccordionLat, AccordionList } from '../components/NavBar'
 import './eventcard.css'
 import '../css/MisEventos.css'
 import useRequireAuth from '../hooks/userAuth'
-export default function Orders () {
+export default function Orders() {
   const [orders, setOrders] = useState([]) // ✅ array
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -98,8 +98,7 @@ export default function Orders () {
                       <NavLink
                         to='/user/orders'
                         className={({ isActive }) =>
-                          `sc-b78ef1b0-1 giEdKV sc-e75005a7-1 ${
-                            isActive ? 'hdRTZX' : 'dJNIGu'
+                          `sc-b78ef1b0-1 giEdKV sc-e75005a7-1 ${isActive ? 'hdRTZX' : 'dJNIGu'
                           }`
                         }
                         end
@@ -111,8 +110,7 @@ export default function Orders () {
                       <NavLink
                         to='/user/orders/past-events'
                         className={({ isActive }) =>
-                          `sc-b78ef1b0-1 giEdKV sc-e75005a7-1 ${
-                            isActive ? 'hdRTZX' : 'dJNIGu'
+                          `sc-b78ef1b0-1 giEdKV sc-e75005a7-1 ${isActive ? 'hdRTZX' : 'dJNIGu'
                           }`
                         }
                       >
@@ -153,33 +151,45 @@ export default function Orders () {
         <div className='sc-7e332ac7-10 jTWxHJ'>
           <div className='sc-13bc719a-7 jQIWKC'>
             <div className='sc-6b69d81f-2 Ykfef'>
+
               {orders.length > 0 ? (
                 <ul
                   data-testid='nextEventSubcards'
                   className='sc-7da77218-1 jvFlWE'
                 >
                   {orders.map(order => (
+
+
                     <li
                       key={order.id}
                       className='mb-4 '
                       style={{ paddingBottom: '8px' }}
                     >
+
+
+
+
+
                       <div className='sc-26bf2391-1 cGlfZA'>
                         <div className='sc-26bf2391-2 UTqBi'>
+
                           <a
                             id=':r1:'
-                            className='sc-5ff3f33f-1 jVrMWe sc-26bf2391-3 ccPkCm'
+                            className='sc-5ff3f33f-1  oZZIQ jVrMWe sc-26bf2391-3 ccPkCm'
                             href={`/user/order/${order.orderNumber}/view`}
                           >
+                            
+
                             <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'></span>
                             <h3
                               data-testid='nextEventTitle'
-                              className='sc-26bf2391-4 iHvEGE'
+                              className='sc-26bf2391-4 cQtZom iHvEGE'
                             >
                               {order?.event?.event ||
                                 order?.event?.name ||
                                 'EVENTO'}
                             </h3>
+
                             <div className='sc-26bf2391-14 fHJnPI'>
                               <p className='sc-26bf2391-12 OUFrB'>
                                 <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
@@ -250,6 +260,7 @@ export default function Orders () {
                         </a>
                       </div>
                     </li>
+
                   ))}
                   <br></br>
                 </ul>

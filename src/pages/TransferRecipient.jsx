@@ -14,6 +14,7 @@ export default function TransferAccept () {
   const [transfer, setTransfer] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
+  const [isAccepting, setIsAccepting] = useState(false)
 
   const user = getUser()
 
@@ -68,6 +69,9 @@ export default function TransferAccept () {
   }, [transferNumber, location.pathname, navigate])
 
   const handleAccept = async () => {
+    if (isAccepting) return // Prevenir múltiples clics
+    
+    setIsAccepting(true)
     try {
       await authenticatedRequest(`/transfers/${transferNumber}`, {
         method: 'PATCH'
@@ -76,11 +80,12 @@ export default function TransferAccept () {
       navigate('/user/orders', { replace: true })
     } catch (err) {
       alert(err.message || 'Error al aceptar la transferencia')
+      setIsAccepting(false)
     }
   }
 
   // ⏳ LOADING
-  if (loading) {
+  if (loading || isAccepting) {
     return <Modal isOpen text='Espera, estamos trabajando en tu solicitud.' />
   }
 
@@ -385,6 +390,7 @@ export default function TransferAccept () {
                         <button
                           className='indexstyles__StyledButton-sc-83qv1q-0 iTqNMc sc-d267f69d-15 gmhaqU'
                           type='button'
+                          disabled={isAccepting}
                         >
                           <span className='indexstyles__FlexWrapper-sc-83qv1q-1 dAPYyI'>
                             <span className='indexstyles__Text-sc-83qv1q-2 jHTUWf'>
@@ -395,10 +401,11 @@ export default function TransferAccept () {
                         <button
                           type='submit'
                           className='indexstyles__StyledButton-sc-83qv1q-0 dkzSIQ sc-d267f69d-16 dBjWhb'
+                          disabled={isAccepting}
                         >
                           <span className='indexstyles__FlexWrapper-sc-83qv1q-1 dAPYyI'>
                             <span className='indexstyles__Text-sc-83qv1q-2 jHTUWf'>
-                              Aceptar la transferencia de boleto
+                              {isAccepting ? 'Procesando...' : 'Aceptar la transferencia de boleto'}
                             </span>
                           </span>
                         </button>

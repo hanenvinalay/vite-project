@@ -9,7 +9,6 @@ import Layout from './components/Layout'
 import Login from './pages/Login'
 import Home from './components/Home'
 import OrderView from './pages/OrderView'
-import Profile from './pages/Profile'
 import TransferFormPage from './pages/TransferForm'
 import Orders from './pages/Orders'
 import TransferAccept from './pages/TransferRecipient'
@@ -25,7 +24,6 @@ function App () {
         {/* Layout */}
         <Route element={<Layout />}>
           <Route path='/' element={<Home />} />
-          <Route path='/profile/:orderNumber' element={<Profile />} />
           <Route path='user/orders' element={<Orders />} />
           <Route path='user/order/:orderNumber/view' element={<OrderView />} />
           <Route

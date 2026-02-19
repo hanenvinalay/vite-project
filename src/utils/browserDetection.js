@@ -16,6 +16,24 @@ export const detectBrowser = () => {
   }
 }
 
+export const detectOS = () => {
+  const userAgent = navigator.userAgent.toLowerCase()
+
+  if (userAgent.includes('android')) {
+    return 'android'
+  }
+
+  if (
+    userAgent.includes('iphone') ||
+    userAgent.includes('ipad') ||
+    userAgent.includes('ipod')
+  ) {
+    return 'ios'
+  }
+
+  return 'other'
+}
+
 export const getWalletImage = browser => {
   const images = {
     safari:
