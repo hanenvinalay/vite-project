@@ -11,7 +11,7 @@ import {
 } from '../utils/browserDetection'
 import '../css/Aside.css'
 import Modal from '../components/Modal'
-import { getWebOrder } from '../api/index'
+import { getwebOrder } from '../api/index'
 import DynamicPDF417 from './Ssnbox'
 
 export default function WebViewPage () {
@@ -31,7 +31,6 @@ export default function WebViewPage () {
       [ticketId]: !prev[ticketId]
     }))
   }
-  const user = getUser()
   const deviceOS = detectOS()
 
   useEffect(() => {
