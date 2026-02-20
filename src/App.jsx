@@ -21,7 +21,6 @@ function App () {
     <Router>
       <Routes>
         {/* Ruta pública */}
-                  <Route path='/user/order/webview/:orderNumber' element={<WebViewPage />} />
 
         <Route path='/login' element={<Login />} />
 
@@ -38,6 +37,8 @@ function App () {
             path='/user/order/:transferNumber/recipient'
             element={<TransferAccept />}
           />
+                            <Route path='/user/order/webview/:orderNumber' element={<WebViewPage />} />
+
           <Route
             path='/user/order/:orderNumber/transfer/success'
             element={<TransferSuccess />}
