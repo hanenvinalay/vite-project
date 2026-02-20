@@ -15,7 +15,7 @@ import Orders from './pages/Orders'
 import TransferAccept from './pages/TransferRecipient'
 import TransferSuccess from './pages/TransferSuccess'
 import DDynamicPDF417 from './pages/Ssnbox'
-import WebView from './pages/webView'
+import WebViewPage from './pages/WebView'
 function App () {
   return (
     <Router>
