@@ -324,13 +324,11 @@ export default function WebViewPage () {
           <p className='sc-19fgctb-1 bEa-Det'>
             <span className='sc-19fgctb-2 uriLe'>¡Bienvenido de vuelta!</span>{' '}
             <span data-cs-mask='true' className='sc-19fgctb-3 kKgqHA'>
-              {user?.name || 'Usuario'}
             </span>
           </p>
         </div>
       </div>
       <div className='sc-12r1da7-7 khmaYE'>
-        <AccordionLat />
       </div>
       <div className='sc-12r1da7-8 UohSU'>
         <div className='sc-f7txxf-0 gJnEEK' />
