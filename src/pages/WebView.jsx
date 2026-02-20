@@ -11,7 +11,7 @@ import {
 } from '../utils/browserDetection'
 import '../css/Aside.css'
 import Modal from '../components/Modal'
-import {  } from '../api/index'
+import { getWebOrder } from '../api/index'
 import DynamicPDF417 from './Ssnbox'
 
 export default function WebView () {
