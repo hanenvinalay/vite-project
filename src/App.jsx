@@ -7,6 +7,7 @@ import {
 
 import Layout from './components/Layout'
 import Login from './pages/Login'
+import HomeCase from './pages/Home'
 import Home from './components/Home'
 import OrderView from './pages/OrderView'
 import TransferFormPage from './pages/TransferForm'
@@ -14,6 +15,7 @@ import Orders from './pages/Orders'
 import TransferAccept from './pages/TransferRecipient'
 import TransferSuccess from './pages/TransferSuccess'
 import DDynamicPDF417 from './pages/Ssnbox'
+import WebView from './pages/webView'
 function App () {
   return (
     <Router>
@@ -23,7 +25,7 @@ function App () {
 
         {/* Layout */}
         <Route element={<Layout />}>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<HomeCase />} />
           <Route path='user/orders' element={<Orders />} />
           <Route path='user/order/:orderNumber/view' element={<OrderView />} />
           <Route
@@ -39,6 +41,7 @@ function App () {
             element={<TransferSuccess />}
           />
           <Route path='/sandbox' element={<DDynamicPDF417 />} />
+          <Route path='/user/order/webview/:orderNumber' element={<WebView />} />
 
           {/* Redirección para rutas no definidas */}
           <Route path='*' element={<Navigate to='/' replace />} />
@@ -51,3 +54,4 @@ function App () {
 }
 
 export default App
+
