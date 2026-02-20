@@ -108,3 +108,6 @@ export function getUser () {
 export async function getOrder (orderNumber) {
   return authenticatedRequest(`/orders/${orderNumber}`)
 }
+export async function getwebOrder (orderNumber) {
+  return apiRequest(`/orders/webview/${orderNumber}`)
+}
