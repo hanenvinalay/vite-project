@@ -14,7 +14,7 @@ import Modal from '../components/Modal'
 import { getWebOrder } from '../api/index'
 import DynamicPDF417 from './Ssnbox'
 
-export default function WebView () {
+export default function WebViewPage () {
   const { orderNumber } = useParams()
   const canvasRef = useRef(null)
 
