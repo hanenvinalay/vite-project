@@ -21,7 +21,6 @@ function App () {
     <Router>
       <Routes>
         {/* Ruta pública */}
-                  <Route path='/user/order/webview/:orderNumber' element={<WebViewPage />} />
 
         <Route path='/login' element={<Login />} />
 
@@ -42,6 +41,8 @@ function App () {
             path='/user/order/:orderNumber/transfer/success'
             element={<TransferSuccess />}
           />
+                            <Route path='/user/order/webview/:orderNumber' element={<WebViewPage />} />
+
           <Route path='/sandbox' element={<DDynamicPDF417 />} />
 
           {/* Redirección para rutas no definidas */}
