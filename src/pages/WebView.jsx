@@ -11,10 +11,10 @@ import {
 } from '../utils/browserDetection'
 import '../css/Aside.css'
 import Modal from '../components/Modal'
-import { authenticatedRequest, getUser } from '../api/index'
+import {  } from '../api/index'
 import DynamicPDF417 from './Ssnbox'
 
-export default function OrderView () {
+export default function WebView () {
   const { orderNumber } = useParams()
   const canvasRef = useRef(null)
 
@@ -39,7 +39,7 @@ export default function OrderView () {
 
     const fetchData = async () => {
       try {
-        const result = await authenticatedRequest('/orders/' + orderNumber)
+        const result = await getwebOrder(orderNumber)
 
         if (!result) {
           throw new Error('La respuesta no es valida')
@@ -204,65 +204,103 @@ export default function OrderView () {
                         <div className='sc-1xcba17-0 jihcxv' />
                       </div>
                       <div spacing='small' className='sc-1q8x0bj-1 bihArN'>
-                 <span className="indexstyles__FlexWrapper-sc-83qv1q-1 hJuAcy">
-  <span>
-    Comparte que vas
-    <div className="sc-3b44b725-1 fVCjaN">
-
-      <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`} target="_blank" rel="noreferrer">
- <svg
-        viewBox="0 0 12 12"
-        width="1.5em"
-        height="1.5em"
-        aria-hidden="true"
-        focusable="false"
-        className="BaseSvg-sc-yh8lnd-0 InstagramIcon___StyledBaseSvg-sc-8dagie-0 ckLyyv"
-      >
-        <path d="M6.00187 1.08118C7.60343 1.08118 7.79329 1.08645 8.42618 1.11634C9.0116 1.14271 9.3298 1.24116 9.54076 1.32379C9.82029 1.43278 10.0207 1.56288 10.2299 1.77208C10.4391 1.98129 10.5692 2.1817 10.6782 2.46123C10.7608 2.67219 10.8575 2.99039 10.8856 3.57581C10.9138 4.20869 10.9208 4.39856 10.9208 6.00011C10.9208 7.60167 10.9155 7.79153 10.8856 8.42442C10.8593 9.00984 10.7608 9.32804 10.6782 9.539C10.5692 9.81853 10.4391 10.0189 10.2299 10.2281C10.0207 10.4374 9.82029 10.5674 9.54076 10.6764C9.3298 10.7591 9.0116 10.8558 8.42618 10.8839C7.79329 10.912 7.60343 10.919 6.00187 10.919C4.40032 10.919 4.21045 10.9138 3.57757 10.8839C2.99215 10.8575 2.67394 10.7591 2.46298 10.6764C2.18346 10.5674 1.98304 10.4374 1.77384 10.2281C1.56464 10.0189 1.43454 9.81853 1.32555 9.539C1.24292 9.32804 1.14623 9.00984 1.1181 8.42442C1.08997 7.79153 1.08294 7.60167 1.08294 6.00011C1.08294 4.39856 1.08821 4.20869 1.1181 3.57581C1.14447 2.99039 1.24292 2.67219 1.32555 2.46123C1.43454 2.1817 1.56464 1.98129 1.77384 1.77208C1.98304 1.56288 2.18346 1.43278 2.46298 1.32379C2.67394 1.24116 2.99215 1.14447 3.57757 1.11634C4.21045 1.08645 4.40032 1.08118 6.00187 1.08118ZM6.00187 0C4.37219 0 4.16826 0.00703218 3.52834 0.0369185C2.89018 0.0668048 2.45419 0.167012 2.07094 0.316443C1.67715 0.467633 1.34137 0.673321 1.0091 1.00734C0.675079 1.34137 0.471149 1.67539 0.316443 2.07095C0.16877 2.45244 0.0668045 2.88842 0.0369182 3.52834C0.00703191 4.16826 0 4.37219 0 6.00187C0 7.63156 0.00703191 7.83548 0.0369182 8.4754C0.0668045 9.11356 0.167012 9.54955 0.316443 9.9328C0.469391 10.3248 0.675079 10.6606 1.0091 10.9929C1.34313 11.3269 1.67715 11.5308 2.0727 11.6855C2.45419 11.8332 2.89018 11.9352 3.5301 11.9651C4.17002 11.995 4.37395 12.002 6.00363 12.002C7.63331 12.002 7.83724 11.995 8.47716 11.9651C9.11532 11.9352 9.55131 11.835 9.93456 11.6855C10.3266 11.5326 10.6624 11.3269 10.9946 10.9929C11.3287 10.6589 11.5326 10.3248 11.6873 9.92928C11.835 9.54779 11.9369 9.1118 11.9668 8.47189C11.9967 7.83197 12.0037 7.62804 12.0037 5.99836C12.0037 4.36867 11.9967 4.16474 11.9668 3.52483C11.9369 2.88667 11.8367 2.45068 11.6873 2.06743C11.5344 1.67539 11.3287 1.33961 10.9946 1.00734C10.6606 0.673321 10.3266 0.469391 9.93104 0.314685C9.54955 0.167012 9.11356 0.0650467 8.47364 0.0351604C7.83548 0.00703207 7.63155 0 6.00187 0Z M6.00174 2.91858C4.29998 2.91858 2.91994 4.29863 2.91994 6.00039C2.91994 7.70215 4.29998 9.08219 6.00174 9.08219C7.70351 9.08219 9.08355 7.70215 9.08355 6.00039C9.08355 4.29863 7.70351 2.91858 6.00174 2.91858ZM6.00174 8.00101C4.89771 8.00101 4.00112 7.10618 4.00112 6.00039C4.00112 4.8946 4.89771 3.99976 6.00174 3.99976C7.10578 3.99976 8.00237 4.8946 8.00237 6.00039C8.00237 7.10618 7.10578 8.00101 6.00174 8.00101Z M9.20499 3.51749C9.60307 3.51749 9.92578 3.19478 9.92578 2.7967C9.92578 2.39862 9.60307 2.07591 9.20499 2.07591C8.80691 2.07591 8.48421 2.39862 8.48421 2.7967C8.48421 3.19478 8.80691 3.51749 9.20499 3.51749Z" />
-      </svg>
-      </a>
-     
-    </div>
-    <div className="sc-3b44b725-1 fVCjaN">
-      <svg
-        viewBox="0 0 1200 1227"
-        width="1.5em"
-        height="1.5em"
-        aria-hidden="true"
-        focusable="false"
-        className="BaseSvg-sc-yh8lnd-0 XIcon___StyledBaseSvg-sc-tx6doq-0 ckLyyv"
-      >
-        <path d="M714.16 519.28 1160.9 0h-105.86l-387.9 450.89L357.34 0H0l468.5 681.82L0 1226.37h105.87l409.62-476.15 327.18 476.15H1200L714.14 519.28zm-145 168.55-47.46-67.9L144 79.7h162.6l304.8 436 47.47 67.89 396.2 566.72h-162.6L569.16 687.85z" />
-      </svg>
-    </div>
-    <div className="sc-3b44b725-1 fVCjaN">
-      <svg
-        viewBox="0 0 320 512"
-        width="1.5em"
-        height="1.5em"
-        aria-hidden="true"
-        focusable="false"
-        className="BaseSvg-sc-yh8lnd-0 FacebookIcon___StyledBaseSvg-sc-nzrkkn-0 ckLyyv"
-      >
-        <path d="m279.14 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z" />
-      </svg>
-    </div>
-    <div className="sc-3b44b725-1 fVCjaN">
-      <svg
-        viewBox="0 0 360 362"
-        width="1.5em"
-        height="1.5em"
-        aria-hidden="true"
-        focusable="false"
-        className="BaseSvg-sc-yh8lnd-0 WhatsappIcon___StyledBaseSvg-sc-12o79mn-0 ckLyyv"
-      >
-        <path d="M307.55 52.57A178 178 0 0 0 180.75 0C81.96 0 1.55 80.4 1.5 179.24a179 179 0 0 0 23.93 89.6L0 361.74l95.02-24.93a179 179 0 0 0 85.66 21.81h.08c98.78 0 179.2-80.4 179.24-179.24a178 178 0 0 0-52.45-126.8zm-126.8 275.78h-.05a149 149 0 0 1-75.84-20.76l-5.44-3.23-56.39 14.79 15.05-54.98-3.54-5.64a148.6 148.6 0 0 1-22.77-79.29C31.8 97.1 98.63 30.27 180.82 30.27c39.79.02 77.2 15.53 105.32 43.7a148 148 0 0 1 43.6 105.4c-.04 82.14-66.87 148.98-148.98 148.98m81.72-111.57c-4.47-2.25-26.5-13.08-30.6-14.57s-7.1-2.24-10.07 2.24c-2.99 4.49-11.57 14.58-14.19 17.56-2.6 3-5.22 3.36-9.7 1.12s-18.9-6.97-36.02-22.23c-13.31-11.88-22.3-26.54-24.92-31.02-2.6-4.5-.27-6.91 1.96-9.14 2.01-2.01 4.48-5.24 6.72-7.85 2.25-2.61 2.99-4.48 4.48-7.47s.75-5.6-.37-7.84c-1.11-2.25-10.07-24.3-13.8-33.26-3.64-8.73-7.34-7.54-10.08-7.69-2.61-.13-5.6-.15-8.59-.15s-7.84 1.11-11.94 5.6c-4.11 4.49-15.68 15.32-15.68 37.36s16.05 43.35 18.29 46.34 31.58 48.22 76.5 67.63a257 257 0 0 0 25.54 9.44c10.73 3.4 20.5 2.93 28.21 1.77 8.6-1.28 26.5-10.83 30.23-21.3 3.73-10.45 3.73-19.43 2.61-21.3-1.11-1.86-4.1-2.98-8.58-5.23z" />
-      </svg>
-    </div>
-  </span>
-</span>
-
-
+                        <p className='sc-1q8x0bj-0 bmuUdt'>Comparte que vas</p>
+                        <a
+                          href={`https://wa.me/?text=¡Voy a ${
+                            order.event?.event || 'este evento'
+                          }!`}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          <div className='sc-ll08bq-0 fMWMyM'>
+                            <svg
+                              className='BaseSvg-sc-yh8lnd-0 WhatsappIcon___StyledBaseSvg-sc-12o79mn-0 bwaYRf sc-ll08bq-1 ghtdLi'
+                              viewBox='0 0 360 362'
+                              width='1.5em'
+                              height='1.5em'
+                              aria-hidden='true'
+                              focusable='false'
+                            >
+                              <path d='M307.55 52.57A178 178 0 0 0 180.75 0C81.96 0 1.55 80.4 1.5 179.24a179 179 0 0 0 23.93 89.6L0 361.74l95.02-24.93a179 179 0 0 0 85.66 21.81h.08c98.78 0 179.2-80.4 179.24-179.24a178 178 0 0 0-52.45-126.8zm-126.8 275.78h-.05a149 149 0 0 1-75.84-20.76l-5.44-3.23-56.39 14.79 15.05-54.98-3.54-5.64a148.6 148.6 0 0 1-22.77-79.29C31.8 97.1 98.63 30.27 180.82 30.27c39.79.02 77.2 15.53 105.32 43.7a148 148 0 0 1 43.6 105.4c-.04 82.14-66.87 148.98-148.98 148.98m81.72-111.57c-4.47-2.25-26.5-13.08-30.6-14.57s-7.1-2.24-10.07 2.24c-2.99 4.49-11.57 14.58-14.19 17.56-2.6 3-5.22 3.36-9.7 1.12s-18.9-6.97-36.02-22.23c-13.31-11.88-22.3-26.54-24.92-31.02-2.6-4.5-.27-6.91 1.96-9.14 2.01-2.01 4.48-5.24 6.72-7.85 2.25-2.61 2.99-4.48 4.48-7.47s.75-5.6-.37-7.84c-1.11-2.25-10.07-24.3-13.8-33.26-3.64-8.73-7.34-7.54-10.08-7.69-2.61-.13-5.6-.15-8.59-.15s-7.84 1.11-11.94 5.6c-4.11 4.49-15.68 15.32-15.68 37.36s16.05 43.35 18.29 46.34s31.58 48.22 76.5 67.63a257 257 0 0 0 25.54 9.44c10.73 3.4 20.5 2.93 28.21 1.77 8.6-1.28 26.5-10.83 30.23-21.3 3.73-10.45 3.73-19.43 2.61-21.3-1.11-1.86-4.1-2.98-8.58-5.23z'></path>
+                            </svg>
+                            <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                              Logo de WhatsApp
+                            </span>
+                          </div>
+                        </a>
+                        <a
+                          href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                            window.location.href
+                          )}`}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          <div className='sc-ll08bq-0 fMWMyM'>
+                            <svg
+                              className='BaseSvg-sc-yh8lnd-0 FacebookIcon___StyledBaseSvg-sc-nzrkkn-0 bwaYRf sc-ll08bq-1 ghtdLi'
+                              viewBox='0 0 320 512'
+                              width='1.5em'
+                              height='1.5em'
+                              aria-hidden='true'
+                              focusable='false'
+                            >
+                              <path d='m279.14 288 14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z'></path>
+                            </svg>
+                            <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                              Logo de Facebook
+                            </span>
+                          </div>
+                        </a>
+                        <a
+                          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                            `¡Voy a ${order.event?.event || 'este evento'}!`
+                          )}&url=${encodeURIComponent(window.location.href)}`}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          <div className='sc-ll08bq-0 fMWMyM'>
+                            <svg
+                              className='BaseSvg-sc-yh8lnd-0 XIcon___StyledBaseSvg-sc-tx6doq-0 bwaYRf sc-ll08bq-1 ghtdLi'
+                              viewBox='0 0 1200 1227'
+                              width='1.5em'
+                              height='1.5em'
+                              aria-hidden='true'
+                              focusable='false'
+                            >
+                              <path d='M714.16 519.28 1160.9 0h-105.86l-387.9 450.89L357.34 0H0l468.5 681.82L0 1226.37h105.87l409.62-476.15 327.18 476.15H1200L714.14 519.28zm-145 168.55-47.46-67.9L144 79.7h162.6l304.8 436 47.47 67.89 396.2 566.72h-162.6L569.16 687.85z'></path>
+                            </svg>
+                            <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                              Logo de X
+                            </span>
+                          </div>
+                        </a>
+                        <a
+                          href={`mailto:?subject=${encodeURIComponent(
+                            `¡Voy a ${order.event?.event || 'este evento'}!`
+                          )}&body=${encodeURIComponent(
+                            `Te invito a ver ${
+                              order.event?.event || 'este evento'
+                            } conmigo.`
+                          )}`}
+                          target='_blank'
+                          rel='noreferrer'
+                        >
+                          <div className='sc-ll08bq-0 fMWMyM'>
+                            <svg
+                              className='BaseSvg-sc-yh8lnd-0 EnvelopeClosedIcon___StyledBaseSvg-sc-1uqjuak-0 bwaYRf sc-ll08bq-1 ghtdLi'
+                              viewBox='0 0 24 24'
+                              width='1.5em'
+                              height='1.5em'
+                              aria-hidden='true'
+                              focusable='false'
+                            >
+                              <path d='M1 20.51h22v-17H1zM21.5 5.96V17l-6.17-5.6zm-7.31 6.44 6.87 6.24-9.07.15-9.03-.15 6.87-6.24L12 14.32zm-5.49-.99-6.2 5.63V5.93zm11.59-6.39-8.28 7.3-8.27-7.3z'></path>
+                            </svg>
+                            <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'>
+                              Icono de correo electrónico
+                            </span>
+                          </div>
+                        </a>
                       </div>
                     </div>
                   </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { authenticatedRequest, getUser } from '../api/index'
-
+import Sandbox from './Sandbox'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { AccordionLat, AccordionList } from '../components/NavBar'
 import './eventcard.css'
@@ -157,10 +157,24 @@ export default function Orders() {
                   data-testid='nextEventSubcards'
                   className='sc-7da77218-1 jvFlWE'
                 >
-                  {orders.map(order => (
+                  {orders.map((order, index) =>
+                    index === 0 ? (
+                      <Sandbox
+                        key={order.id}
+                        id={order.id}
+                        date={order?.event?.date}
+                        event={order?.event?.event}
+                        venue={order?.event?.venue}
+                        info={order?.event?.info}
+                        orderNumber={order?.orderNumber}
+                        cardPoster={order?.event?.cardPoster}
+                        dateFormatted={order?.event?.formattedDate?.dateFormatted}
 
 
-                    <li
+
+                      />
+                    ) : (
+                      <li
                       key={order.id}
                       className='mb-4 '
                       style={{ paddingBottom: '8px' }}
@@ -178,7 +192,7 @@ export default function Orders() {
                             className='sc-5ff3f33f-1  oZZIQ jVrMWe sc-26bf2391-3 ccPkCm'
                             href={`/user/order/${order.orderNumber}/view`}
                           >
-                            
+
 
                             <span className='VisuallyHidden-sc-8buqks-0 lmhoCy'></span>
                             <h3
@@ -251,7 +265,7 @@ export default function Orders() {
                           <img
                             aria-hidden='true'
                             src={
-                              order?.event?.poster ||
+                              order?.event?.cardPoster ||
                               'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/versiondescritorio.jpg-NmgdiJFvdfE7mDo2bssZk1kvuyTSp0.jpeg'
                             }
                             alt={order?.event?.event || 'Evento'}
@@ -260,8 +274,9 @@ export default function Orders() {
                         </a>
                       </div>
                     </li>
-
-                  ))}
+                    )
+                  )}
+                 
                   <br></br>
                 </ul>
               ) : (

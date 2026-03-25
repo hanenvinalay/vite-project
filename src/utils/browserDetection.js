@@ -67,12 +67,12 @@ export const getWalletAltText = browser => {
 
 export const getAppStoreLink = browser => {
   const images  = {
-    safari: 'https://uk.tmconst.com/rc-51d3375a/images/logo/apple-store/en.svg',
+    safari: 'https://uk.tmconst.com/rc-4d69f1c8/images/logo/apple-store/en.svg',
     chrome: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
-    firefox: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
+    firefox: 'https://uk.tmconst.com/rc-4d69f1c8/images/logo/apple-store/en.svg',
     edge: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
     opera: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg',
-    other: 'https://uk.tmconst.com/rc-51d3375a/images/logo/google-store/en.svg'
+    other: 'https://uk.tmconst.com/rc-4d69f1c8/images/logo/apple-store/en.svg'
   }
 
   return images[browser] || images.other

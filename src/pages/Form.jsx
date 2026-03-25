@@ -8,7 +8,7 @@ import Modal from '../components/Modal'
 import { API_URL } from '../api/index'
 
 import { AsideModal } from '../components/Aside'
-export default function TransferFormPage() {
+export default function NewTransferFormPage() {
     const { orderNumber } = useParams()
     const navigate = useNavigate()
     const [order, setOrder] = useState(null)

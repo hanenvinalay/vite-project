@@ -1,0 +1,201 @@
+
+
+      .wrapper {
+        width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        z-index: 1000;
+      }
+
+      .loader {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+
+      .outer-ring {
+        width: 80px;
+        height: 80px;
+      }
+
+      .outer-ring div {
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+
+        display: block;
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        margin: 0px;
+        border-radius: 100%;
+        border: 3px solid #904eba;
+        border-color: #904eba transparent transparent transparent;
+        animation: outer-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        -webkit-animation: outer-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      }
+
+      .outer-ring div:nth-child(1) {
+        -webkit-animation-delay: -0.45s;
+        animation-delay: -0.45s;
+      }
+
+      .outer-ring div:nth-child(2) {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s;
+      }
+
+      .outer-ring div:nth-child(3) {
+        -webkit-animation-delay: -0.15s;
+        animation-delay: -0.15s;
+      }
+
+      @-webkit-keyframes outer-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes outer-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      .middle-ring {
+        display: inline-block;
+        position: absolute;
+        width: 80px;
+        height: 80px;
+      }
+
+      .middle-ring div {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 60px;
+        height: 60px;
+        margin-top: 7px;
+        margin-left: 7px;
+        border-radius: 100%;
+        border: 3px solid #aadddd;
+        border-color: #aadddd transparent transparent transparent;
+        animation: middle-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        -webkit-animation: middle-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      }
+
+      .middle-ring div:nth-child(1) {
+        -webkit-animation-delay: -0.45s;
+        animation-delay: -0.45s;
+      }
+
+      .middle-ring div:nth-child(2) {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s;
+      }
+
+      .middle-ring div:nth-child(3) {
+        -webkit-animation-delay: -0.15s;
+        animation-delay: -0.15s;
+      }
+
+      @-webkit-keyframes middle-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes middle-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      .innermost-ring {
+        display: inline-block;
+        position: absolute;
+        width: 80px;
+        height: 80px;
+      }
+
+      .innermost-ring div {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        margin-top: 7px;
+        margin-left: 7px;
+        border-radius: 100%;
+        border: 3px solid #026cdf;
+        border-color: #026cdf transparent transparent transparent;
+        animation: innermost-ring 2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        -webkit-animation: innermost-ring 2s cubic-bezier(0.5, 0, 0.5, 1)
+          infinite;
+      }
+
+      .innermost-ring div:nth-child(1) {
+        -webkit-animation-delay: -0.45s;
+        animation-delay: -0.45s;
+      }
+
+      .innermost-ring div:nth-child(2) {
+        -webkit-animation-delay: -0.3s;
+        animation-delay: -0.3s;
+      }
+
+      .innermost-ring div:nth-child(3) {
+        -webkit-animation-delay: -0.15s;
+        animation-delay: -0.15s;
+      }
+
+      @-webkit-keyframes innermost-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes innermost-ring {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+
+  

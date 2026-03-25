@@ -2912,7 +2912,23 @@ a:hover {
     align-items: center;
   } 
 }     
-
+.fVCjaN:first-child {
+    margin-inline-start: 4px;
+}
+.fVCjaN {
+    display: inline-grid;
+    width: 24px;
+    height: 24px;
+    place-items: center;
+    place-content: center;
+    border-radius: 50%;
+    background-color: rgb(255, 255, 255);
+}
+.fVCjaN svg {
+    width: 16px;
+    height: 16px;
+    fill: rgb(0, 0, 0);
+}
 .hPSPJL { 
     display: flex; 
     flex-direction: column; 
@@ -2939,6 +2955,46 @@ a:hover {
     margin-top: 8px;
 } 
 
+
+
+/* Solo móviles (hasta 899px) */
+@media (max-width: 899px) {
+  .bihArN {
+    border: 1px solid #fff;
+        font-family: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    color: rgb(255, 255, 255);
+    background-color: transparent;
+    position: relative;
+    display: inline-block;
+    max-width: 290px;
+    min-height: 44px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.4;
+    text-align: center;
+    margin: initial;
+    border-image: initial;
+    border-color: rgb(255, 255, 255);
+    padding: 8px 16px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    white-space: normal;
+    text-wrap: wrap;
+    transition: background-color 0.2s;
+  }
+ .hJuAcy {
+    display: flex;
+    gap: 8px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    visibility: visible;
+}
+}
 .chthMZ { 
     line-height: 1.2; 
     text-transform: uppercase;
@@ -3781,14 +3837,7 @@ html {
   flex-grow: 1;
 }
 
-.bHIhNV {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  padding: 16px 12px;
-  background-color: initial;
-}
+
 
 .IATdI {
   display: flex;
@@ -4481,20 +4530,8 @@ p {
   transform: translateX(7.8989px);
 }
 
-.bHIhNV {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-  padding: 16px 12px;
-  background-color: initial;
-}
 
-*,
-:before,
-:after {
-  box-sizing: inherit;
-}
+
 
 .ctixpn {
   display: grid;
